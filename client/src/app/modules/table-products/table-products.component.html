@@ -3,111 +3,26 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Header</th>
-                <th>Header</th>
-                <th>Header</th>
-                <th>Header</th>
-                <th>Header</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Full Price</th>
+                <th>Sale Price</th>
+                <th>Discount</th>
+                <th>Availability</th>
+                <th>Supplier</th>
+                <th></th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>1,001</td>
-                <td>Lorem</td>
-                <td>ipsum</td>
-                <td>dolor</td>
-                <td>sit</td>
-                <td class="text-right" id="tableDataBtns">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary"><i class="far fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1,002</td>
-                <td>amet</td>
-                <td>consectetur</td>
-                <td>adipiscing</td>
-                <td>elit</td>
-                <td class="text-right" id="tableDataBtns">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary"><i class="far fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1,003</td>
-                <td>Integer</td>
-                <td>nec</td>
-                <td>odio</td>
-                <td>Praesent</td>
-                <td class="text-right" id="tableDataBtns">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary"><i class="far fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1,003</td>
-                <td>libero</td>
-                <td>Sed</td>
-                <td>cursus</td>
-                <td>ante</td>
-                <td class="text-right" id="tableDataBtns">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary"><i class="far fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1,004</td>
-                <td>dapibus</td>
-                <td>diam</td>
-                <td>Sed</td>
-                <td>nisi</td>
-                <td class="text-right" id="tableDataBtns">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary"><i class="far fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1,005</td>
-                <td>Nulla</td>
-                <td>quis</td>
-                <td>sem</td>
-                <td>at</td>
-                <td class="text-right" id="tableDataBtns">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary"><i class="far fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1,006</td>
-                <td>nibh</td>
-                <td>elementum</td>
-                <td>imperdiet</td>
-                <td>Duis</td>
-                <td class="text-right" id="tableDataBtns">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary"><i class="far fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1,007</td>
-                <td>sagittis</td>
-                <td>ipsum</td>
-                <td>Praesent</td>
-                <td>mauris</td>
+        <tbody *ngIf="products">
+            <tr *ngFor="let product of products">
+                <td>{{ product.productId }}</td>
+                <td>{{ product.productName }}</td>
+                <td>{{ product.category.categoryName }}</td>
+                <td>{{ product.fullPrice }}</td>
+                <td>{{ product.salePrice }}</td>
+                <td>{{ round((product.salePrice / product.fullPrice * 100), 2) }}%</td>
+                <td>{{ product.availability }}</td>
+                <td>{{ product.supplier.supplierName }}</td>
                 <td class="text-right" id="tableDataBtns">
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-secondary"><i class="far fa-edit"></i></button>
@@ -120,11 +35,9 @@
 </div>
 <nav aria-label="Table Navigation">
     <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <li [className]="currentPage === 1 ? 'page-item disabled' : 'page-item'"><a class="page-link" [attr.tabIndex] = "currentPage === 1 ? '-1' : null" href="#">Previous</a></li>
+        <li *ngFor="let page of pages" [className]="page === currentPage ? 'page-item active' : 'page-item'"><a class="page-link" href="#">{{ page }}</a></li>
+        <li [className]="currentPage === pages.length ? 'page-item disabled' : 'page-item'"><a class="page-link" [attr.tabIndex] = "currentPage === 1 ? '-1' : null" href="#">Next</a></li>
     </ul>
 </nav>
 <app-modal-product-form></app-modal-product-form>
