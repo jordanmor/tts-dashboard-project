@@ -33,11 +33,11 @@
         </tbody>
     </table>
 </div>
-<nav aria-label="Table Navigation">
-    <ul class="pagination">
-        <li [className]="currentPage === 1 ? 'page-item disabled' : 'page-item'"><button (click)="prevPage()" class="page-link" [attr.tabIndex] = "currentPage === 1 ? '-1' : null" href="#">Previous</button></li>
-        <li *ngFor="let page of pages" [className]="page === currentPage ? 'page-item active' : 'page-item'"><button (click)="goToPage(page)" class="page-link">{{ page }}</button></li>
-        <li [className]="currentPage === pages.length ? 'page-item disabled' : 'page-item'"><button (click)="nextPage()" class="page-link" [attr.tabIndex] = "currentPage === pages.length ? '-1' : null" href="#">Next</button></li>
-    </ul>
-</nav>
+<app-pagination 
+    [pages]="pages" 
+    [currentPage]="currentPage"
+    (onPrevPage)="handlePrevPage()"
+    (onNextPage)="handleNextPage()"
+    (onGoToPage)="handleGoToPage($event)"
+></app-pagination>
 <app-modal-product-form></app-modal-product-form>

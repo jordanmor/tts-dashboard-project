@@ -24,20 +24,6 @@ export class TableProductsComponent implements OnInit {
     this.showProducts(0, this.isSortDirectionAsc, this.sortBy);
   }
 
-  goToPage(page: number) {
-    this.showProductsSortedBy(this.sortBy, page);
-  }
-
-  prevPage() {
-    this.currentPage -= 1
-    this.showProductsSortedBy(this.sortBy, this.currentPage);
-  }
-
-  nextPage() {
-    this.currentPage += 1
-    this.showProductsSortedBy(this.sortBy, this.currentPage);
-  }
-
   showProductsSortedBy(sortBy: string, page: number = 0) {
     if(page === 0) {
       this.isSortDirectionAsc = !this.isSortDirectionAsc;
@@ -63,9 +49,26 @@ export class TableProductsComponent implements OnInit {
     this.api.getProducts(page, direction, sortBy, orderByDiscount)
       .subscribe(data => {
         this.products = data.content;
+        // Use lodash range function create a numbered array to populate pagination
         this.pages = range(1, data.totalPages + 1);
         this.currentPage = data.number + 1;
       });
+  }
+
+  // Handle pagination interactions
+
+  handleGoToPage(page: number) {
+    this.showProductsSortedBy(this.sortBy, page);
+  }
+
+  handlePrevPage() {
+    this.currentPage -= 1
+    this.showProductsSortedBy(this.sortBy, this.currentPage);
+  }
+
+  handleNextPage() {
+    this.currentPage += 1
+    this.showProductsSortedBy(this.sortBy, this.currentPage);
   }
 
 }
