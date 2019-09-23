@@ -14,7 +14,7 @@ export class ApiService {
     return this.http.get('http://localhost:8080/categories');
   }
 
-  getProducts(page: number = 0, direction: string = 'ASC', sortBy: string = 'productId', orderByDiscount: boolean = false) {
+  getProducts(page: number, direction: string, sortBy: string, orderByDiscount: boolean) {
     return this.http.get<PaginatedResponse>(`http://localhost:8080/products?page=${page}&direction=${direction}&sortBy=${sortBy}&orderByDiscount=${orderByDiscount}`);
   }
 }

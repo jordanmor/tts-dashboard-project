@@ -2,14 +2,14 @@
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th># <i (click)="sortProducts('productId')" class="fas fa-sort"></i></th>
-                <th>Name <i (click)="sortProducts('productName')" class="fas fa-sort"></i></th>
-                <th>Category <i (click)="sortProducts('category')" class="fas fa-sort"></i></th>
-                <th>Full Price <i (click)="sortProducts('fullPrice')" class="fas fa-sort"></i></th>
-                <th>Sale Price <i (click)="sortProducts('salePrice')" class="fas fa-sort"></i></th>
-                <th>Discount <i (click)="orderProductsByDiscount()" class="fas fa-sort"></i></th>
+                <th># <i (click)="showProductsSortedBy('productId')" class="fas fa-sort"></i></th>
+                <th>Name <i (click)="showProductsSortedBy('productName')" class="fas fa-sort"></i></th>
+                <th>Category <i (click)="showProductsSortedBy('category')" class="fas fa-sort"></i></th>
+                <th>Full Price <i (click)="showProductsSortedBy('fullPrice')" class="fas fa-sort"></i></th>
+                <th>Sale Price <i (click)="showProductsSortedBy('salePrice')" class="fas fa-sort"></i></th>
+                <th>Discount <i (click)="showProductsSortedBy('discount')" class="fas fa-sort"></i></th>
                 <th>Availability</th>
-                <th>Supplier <i (click)="sortProducts('supplier')" class="fas fa-sort"></i></th>
+                <th>Supplier <i (click)="showProductsSortedBy('supplier')" class="fas fa-sort"></i></th>
                 <th></th>
             </tr>
         </thead>
@@ -33,11 +33,14 @@
         </tbody>
     </table>
 </div>
-<nav aria-label="Table Navigation">
-    <ul class="pagination">
-        <li [className]="currentPage === 1 ? 'page-item disabled' : 'page-item'"><a class="page-link" [attr.tabIndex] = "currentPage === 1 ? '-1' : null" href="#">Previous</a></li>
-        <li *ngFor="let page of pages" [className]="page === currentPage ? 'page-item active' : 'page-item'"><a class="page-link" href="#">{{ page }}</a></li>
-        <li [className]="currentPage === pages.length ? 'page-item disabled' : 'page-item'"><a class="page-link" [attr.tabIndex] = "currentPage === pages.length ? '-1' : null" href="#">Next</a></li>
-    </ul>
-</nav>
+<ngb-pagination *ngIf="products"
+    [collectionSize]="totalProducts" 
+    [pageSize]="pageSize"
+    [(page)]="currentPage" 
+    [maxSize]="5" 
+    [rotate]="true" 
+    [boundaryLinks]="true"
+    (pageChange)="handlePageChange($event)"
+>
+</ngb-pagination>
 <app-modal-product-form></app-modal-product-form>
