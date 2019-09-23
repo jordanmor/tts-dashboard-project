@@ -17,8 +17,16 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping(value="/products")
-    public Page<Product> getProducts(@RequestParam int page) {
-        return productService.findAll(page);
-    }
+    public Page<Product> getProducts(
+            @RequestParam int page,
+            @RequestParam String direction,
+            @RequestParam String sortBy,
+            @RequestParam boolean orderByDiscount
+            ) {
 
+        if(orderByDiscount == true) {
+            return productService.findAllAndOrderByDiscount(page, 50, direction);
+        }
+        return productService.findAll(page, 50, direction, sortBy);
+    }
 }
