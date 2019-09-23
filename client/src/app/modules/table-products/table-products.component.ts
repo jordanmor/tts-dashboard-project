@@ -12,8 +12,9 @@ import { range } from 'lodash';
 export class TableProductsComponent implements OnInit {
 
   products: Array<Product>;
-  pages: Array<number> = [];
   currentPage: number;
+  totalProducts: number;
+  pageSize: number;
   isSortDirectionAsc: boolean = true;
   sortBy: string = 'productId';
   orderByDiscount: boolean = false;
@@ -48,27 +49,17 @@ export class TableProductsComponent implements OnInit {
     }
     this.api.getProducts(page, direction, sortBy, orderByDiscount)
       .subscribe(data => {
+        console.log(data);
         this.products = data.content;
-        // Use lodash range function create a numbered array to populate pagination
-        this.pages = range(1, data.totalPages + 1);
+        this.totalProducts = data.totalElements;
+        this.pageSize = data.size;
         this.currentPage = data.number + 1;
       });
   }
 
-  // Handle pagination interactions
-
-  handleGoToPage(page: number) {
+  // Handle pagination
+  handlePageChange(page: number) {
     this.showProductsSortedBy(this.sortBy, page);
-  }
-
-  handlePrevPage() {
-    this.currentPage -= 1
-    this.showProductsSortedBy(this.sortBy, this.currentPage);
-  }
-
-  handleNextPage() {
-    this.currentPage += 1
-    this.showProductsSortedBy(this.sortBy, this.currentPage);
   }
 
 }

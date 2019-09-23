@@ -1,5 +1,6 @@
 export class PaginatedResponse {
   content: Array<any>;
-  totalPages: number;
   number: number; // Current page number
+  totalElements: number;
+  size: number; // Page size
 }

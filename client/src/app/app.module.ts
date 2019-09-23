@@ -10,7 +10,6 @@ import { HeaderComponent } from './core/header/header.component';
 import { MainComponent } from './modules/main/main.component';
 import { TableProductsComponent } from './modules/table-products/table-products.component';
 import { ModalProductFormComponent } from './modules/modal-product-form/modal-product-form.component';
-import { PaginationComponent } from './shared/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +18,7 @@ import { PaginationComponent } from './shared/pagination/pagination.component';
     HeaderComponent,
     MainComponent,
     TableProductsComponent,
-    ModalProductFormComponent,
-    PaginationComponent
+    ModalProductFormComponent
   ],
   imports: [
     BrowserModule,
