@@ -5,3 +5,8 @@
 th {
   white-space: nowrap;
 }
+
+table td {
+  vertical-align: middle;
+  padding: .35rem .75rem;
+}
