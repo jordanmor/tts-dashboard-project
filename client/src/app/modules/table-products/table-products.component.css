@@ -1,3 +1,7 @@
 .table-container {
   margin-top: 15px;
 }
+
+th {
+  white-space: nowrap;
+}
