@@ -15,21 +15,38 @@ export class TableProductsComponent implements OnInit {
   pages: Array<number> = [];
   currentPage: number;
   round: any = round;
+  isSortDirectionDefault: boolean = true;
+  sortBy: string = 'productId';
 
   constructor(private api: ApiService) { }
 
   ngOnInit() {
-    this.showProducts();
+    this.showProducts(0, this.isSortDirectionDefault, this.sortBy);
   }
 
-  showProducts() {
-    this.api.getProducts()
+  sortProducts(sortBy: string) {
+    this.isSortDirectionDefault = !this.isSortDirectionDefault;
+    this.sortBy = sortBy;
+    this.showProducts(0, this.isSortDirectionDefault, this.sortBy);
+  }
+
+  orderProductsByDiscount() {
+    this.isSortDirectionDefault = !this.isSortDirectionDefault;
+    this.showProducts(0, this.isSortDirectionDefault, this.sortBy, true);
+  }
+
+  showProducts(page?: number, isSortDirectionDefault?: boolean, sortBy?: string, orderByDiscount?: boolean) {
+    let direction: string;
+    if (isSortDirectionDefault) {
+      direction = 'ASC';
+    } else {
+      direction = 'DESC';
+    }
+    this.api.getProducts(page, direction, sortBy, orderByDiscount)
       .subscribe(data => {
-        console.log(data);
         this.products = data.content;
         this.pages = range(1, data.totalPages + 1);
         this.currentPage = data.number + 1;
-        console.log(this.currentPage);
       });
   }
 
