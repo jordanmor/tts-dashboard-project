@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../core/http/api.service';
 import { Product } from '../../core/models/product';
-import { range } from 'lodash';
 
 @Component({
-  selector: 'app-table-products',
-  templateUrl: './table-products.component.html',
-  styleUrls: ['./table-products.component.css']
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css']
 })
+export class ProductsComponent implements OnInit {
 
-export class TableProductsComponent implements OnInit {
-
-  products: Array<Product>;
+  datasetTitle = {
+    singular: "Product",
+    plural: "Products"
+  };
+  dataset: Product[];
   currentPage: number;
-  totalProducts: number;
+  totalElements: number;
   pageSize: number;
   isSortDirectionAsc: boolean = true;
   sortBy: string = 'productId';
@@ -25,7 +27,7 @@ export class TableProductsComponent implements OnInit {
     this.showProducts(0, this.isSortDirectionAsc, this.sortBy);
   }
 
-  showProductsSortedBy(sortBy: string, page: number = 0) {
+  handleShowProductsSortedBy(sortBy: string, page: number = 0) {
     if(page === 0) {
       this.isSortDirectionAsc = !this.isSortDirectionAsc;
       this.sortBy = sortBy;
@@ -49,8 +51,8 @@ export class TableProductsComponent implements OnInit {
     }
     this.api.getProducts(page, direction, sortBy, orderByDiscount)
       .subscribe(data => {
-        this.products = data.content;
-        this.totalProducts = data.totalElements;
+        this.dataset = data.content;
+        this.totalElements = data.totalElements;
         this.pageSize = data.size;
         this.currentPage = data.number + 1;
       });
@@ -58,7 +60,7 @@ export class TableProductsComponent implements OnInit {
 
   // Handle pagination
   handlePageChange(page: number) {
-    this.showProductsSortedBy(this.sortBy, page);
+    this.handleShowProductsSortedBy(this.sortBy, page);
   }
 
 }

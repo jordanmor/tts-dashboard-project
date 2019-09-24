@@ -33,13 +33,3 @@
         </tbody>
     </table>
 </div>
-<ngb-pagination *ngIf="products"
-    [collectionSize]="totalProducts" 
-    [pageSize]="pageSize"
-    [(page)]="currentPage" 
-    [maxSize]="5" 
-    [rotate]="true" 
-    [boundaryLinks]="true"
-    (pageChange)="handlePageChange($event)"
->
-</ngb-pagination>

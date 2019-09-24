@@ -1,0 +1,15 @@
+<div class="page-header">
+    <h1>Dashboard</h1>
+    <h2>{{ datasetTitle.singular }}</h2>
+    <button type="button" (click)="openModal()" class="btn btn-primary add">Add {{ datasetTitle.plural }}</button>
+</div>
+
+<!-- Alerts -->
+<div *ngIf='show' class="alert-group">
+    <div [className]="'alert alert-' +  alertType" role="alert">
+        ...
+        <button (click)=hideAlert() type="button" class="close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>

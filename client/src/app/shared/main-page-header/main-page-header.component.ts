@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalProductFormComponent } from './../modal-product-form/modal-product-form.component';
+import { ModalProductFormComponent } from '../../modules/products/modal-product-form/modal-product-form.component';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  selector: 'app-main-page-header',
+  templateUrl: './main-page-header.component.html',
+  styleUrls: ['./main-page-header.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainPageHeaderComponent implements OnInit {
 
   show: boolean = false;
   alertType: string = 'success';
+  @Input() datasetTitle: string;
 
   constructor(public modalService: NgbModal) { }
 
