@@ -1,0 +1,23 @@
+<!-- Page Header -->
+<app-main-page-header
+  [datasetTitle]="datasetTitle"
+></app-main-page-header>
+
+<!-- Table -->
+<app-table-products
+  [products]="dataset"
+  (onShowProductsSortedBy)="handleShowProductsSortedBy($event)"
+>
+</app-table-products>
+
+<!-- Pagination -->
+<ngb-pagination *ngIf="dataset"
+    [collectionSize]="totalElements" 
+    [pageSize]="pageSize"
+    [(page)]="currentPage" 
+    [maxSize]="5" 
+    [rotate]="true" 
+    [boundaryLinks]="true"
+    (pageChange)="handlePageChange($event)"
+>
+</ngb-pagination>
