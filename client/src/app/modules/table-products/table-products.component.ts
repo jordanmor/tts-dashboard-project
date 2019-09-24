@@ -49,7 +49,6 @@ export class TableProductsComponent implements OnInit {
     }
     this.api.getProducts(page, direction, sortBy, orderByDiscount)
       .subscribe(data => {
-        console.log(data);
         this.products = data.content;
         this.totalProducts = data.totalElements;
         this.pageSize = data.size;

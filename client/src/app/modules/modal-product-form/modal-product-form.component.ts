@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modal-product-form',
   templateUrl: './modal-product-form.component.html',
   styleUrls: ['./modal-product-form.component.css']
 })
-export class ModalProductFormComponent implements OnInit {
+export class ModalProductFormComponent {
 
-  constructor() { }
+  closeResult: string;
 
-  ngOnInit() {
-  }
+  constructor(private activeModal: NgbActiveModal) { }
 
 }
