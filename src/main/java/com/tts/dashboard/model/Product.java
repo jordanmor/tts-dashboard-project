@@ -9,10 +9,10 @@ import java.math.BigDecimal;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long productId;
+    private long id;
 
     @NotNull
-    private String productName;
+    private String name;
 
     @NotNull
     @ManyToOne
@@ -34,8 +34,8 @@ public class Product {
 
     public Product() {}
 
-    public Product(@NotNull String productName, @NotNull Category category, @NotNull BigDecimal fullPrice, @NotNull BigDecimal salePrice, boolean availability, @NotNull Supplier supplier) {
-        this.productName = productName;
+    public Product(@NotNull String name, @NotNull Category category, @NotNull BigDecimal fullPrice, @NotNull BigDecimal salePrice, boolean availability, @NotNull Supplier supplier) {
+        this.name = name;
         this.category = category;
         this.fullPrice = fullPrice;
         this.salePrice = salePrice;
@@ -43,20 +43,20 @@ public class Product {
         this.supplier = supplier;
     }
 
-    public long getProductId() {
-        return productId;
+    public long getId() {
+        return id;
     }
 
-    public void setProductId(long productId) {
-        this.productId = productId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Category getCategory() {
@@ -102,8 +102,8 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "productId=" + productId +
-                ", productName='" + productName + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", category=" + category +
                 ", fullPrice=" + fullPrice +
                 ", salePrice=" + salePrice +

@@ -2,39 +2,44 @@ package com.tts.dashboard.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Entity
 @Table(name="categories")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long categoryId;
+    private long id;
 
     @NotNull
-    private String categoryName;
+    private String name;
 
     public Category() {}
 
-    public Category(@NotNull String categoryName) {
-        this.categoryName = categoryName;
+    public Category(@NotNull String name) {
+        this.name = name;
     }
 
-    public long getCategoryId() {
-        return categoryId;
+    public long getId() {
+        return id;
     }
 
-    public void setCategoryId(long categoryId) {
-        this.categoryId = categoryId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getName() {
+        return name;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
