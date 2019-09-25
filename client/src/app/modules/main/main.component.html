@@ -1,0 +1,24 @@
+<!-- Page Header -->
+<app-main-page-header
+  [datasetTitle]="datasetTitle"
+></app-main-page-header>
+
+<!-- Table -->
+<app-table
+  [datasetName]="datasetName"
+  [dataset]="data.dataset"
+  [currentPage]="data.currentPage"
+>
+</app-table>
+
+<!-- Pagination -->
+<ngb-pagination *ngIf="data.dataset"
+    [collectionSize]="data.totalElements" 
+    [pageSize]="data.pageSize"
+    [(page)]="data.currentPage" 
+    [maxSize]="5" 
+    [rotate]="true" 
+    [boundaryLinks]="true"
+    (pageChange)="handlePageChange($event)"
+>
+</ngb-pagination>
