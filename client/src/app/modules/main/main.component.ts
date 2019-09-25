@@ -13,14 +13,15 @@ export class MainComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   @Input() datasetName: string;
-  @Input() defaultField: string;
   @Input() datasetTitle: object;
+  defaultField: string = 'id';
 
   data: Data = new Data();
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService) {}
 
   ngOnInit() {
+
     this.subscription = this.dataService.data.subscribe(data => {
       if(data) {
         if(data.dataset.length === 0 || data.dataSetName !== this.datasetName) {
@@ -34,7 +35,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   // Handle pagination
   handlePageChange(page: number) {
-    console.log(page);
     this.dataService.showData(this.datasetName, page, this.data.isSortDirectionAsc, this.data.sortBy);
   }
 

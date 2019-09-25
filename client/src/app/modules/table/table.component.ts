@@ -22,4 +22,14 @@ export class TableComponent implements OnInit {
     this.dataService.sortDataBy(productField, this.currentPage, this.datasetName);
   }
 
+  updateItem(data) {
+    console.log('Update Item');
+    console.log(data);
+  }
+
+  removeItem(data) {
+    console.log('Delete Item');
+    console.log(data);
+  }
+
 }
