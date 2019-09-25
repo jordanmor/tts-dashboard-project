@@ -10,11 +10,11 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getCategories() {
-    return this.http.get('http://localhost:8080/categories');
-  }
-
-  getProducts(page: number, direction: string, sortBy: string, orderByDiscount: boolean) {
-    return this.http.get<PaginatedResponse>(`http://localhost:8080/products?page=${page}&direction=${direction}&sortBy=${sortBy}&orderByDiscount=${orderByDiscount}`);
+  getData(datasetName: string, page: number, direction: string, sortBy: string, orderByDiscount: boolean = false) {
+    if(datasetName === 'products') {
+      return this.http.get<PaginatedResponse>(`http://localhost:8080/${datasetName}?page=${page}&direction=${direction}&sortBy=${sortBy}&orderByDiscount=${orderByDiscount}`);
+    } else {
+      return this.http.get<PaginatedResponse>(`http://localhost:8080/${datasetName}?page=${page}&direction=${direction}&sortBy=${sortBy}`);
+    }
   }
 }

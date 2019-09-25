@@ -1,0 +1,69 @@
+<div class="table-responsive table-container">
+    <table class="table table-bordered table-striped">
+
+        <thead>
+          <tr>
+            <!-- Product Headers -->
+            <ng-container *ngIf="datasetName === 'products'">
+                <th># <i (click)="sortDataBy('productId')" class="fas fa-sort"></i></th>
+                <th>Name <i (click)="sortDataBy('productName')" class="fas fa-sort"></i></th>
+                <th>Full Price <i (click)="sortDataBy('fullPrice')" class="fas fa-sort"></i></th>
+                <th>Sale Price <i (click)="sortDataBy('salePrice')" class="fas fa-sort"></i></th>
+                <th>Discount <i (click)="sortDataBy('discount')" class="fas fa-sort"></i></th>
+                <th>Category <i (click)="sortDataBy('category')" class="fas fa-sort"></i></th>
+                <th>Supplier <i (click)="sortDataBy('supplier')" class="fas fa-sort"></i></th>
+                <th>Availability</th>
+            </ng-container>
+
+            <!-- Category Headers -->
+            <ng-container *ngIf="datasetName === 'categories'">
+                <th># <i (click)="sortDataBy('categoryId')" class="fas fa-sort"></i></th>
+                <th>Name <i (click)="sortDataBy('categoryName')" class="fas fa-sort"></i></th>
+            </ng-container>
+
+            <!-- Supplier Headers -->
+            <ng-container *ngIf="datasetName === 'suppliers'">
+                <th># <i (click)="sortDataBy('supplierId')" class="fas fa-sort"></i></th>
+                <th>Name <i (click)="sortDataBy('supplierName')" class="fas fa-sort"></i></th>
+            </ng-container>
+            
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody *ngIf="dataset">
+            <tr *ngFor="let dataItem of dataset">
+                <!-- Product Data -->
+                <ng-container *ngIf="datasetName === 'products'">
+                    <td>{{ dataItem.productId }}</td>
+                    <td>{{ dataItem.productName }}</td>
+                    <td>{{ dataItem.fullPrice | currency }}</td>
+                    <td>{{ dataItem.salePrice | currency }}</td>
+                    <td>{{ 1 - dataItem.salePrice / dataItem.fullPrice | percent }}</td>
+                    <td>{{ dataItem.category.categoryName }}</td>
+                    <td>{{ dataItem.supplier.supplierName }}</td>
+                    <td>{{ dataItem.availability }}</td>
+                </ng-container>
+
+                <!-- Category Data -->
+                <ng-container *ngIf="datasetName === 'categories'">
+                    <td>{{ dataItem.categoryId }}</td>
+                    <td>{{ dataItem.categoryName }}</td>
+                </ng-container>
+
+                <!-- Supplier Data -->
+                <ng-container *ngIf="datasetName === 'suppliers'">
+                    <td>{{ dataItem.supplierId }}</td>
+                    <td>{{ dataItem.supplierName }}</td>
+                </ng-container>
+
+                <td class="text-right" id="tableDataBtns">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-secondary"><i class="far fa-edit"></i></button>
+                        <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

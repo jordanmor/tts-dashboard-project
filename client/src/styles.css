@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+.table-container {
+  margin-top: 15px;
+}
+
+th {
+  white-space: nowrap;
+}
+
+table td {
+  vertical-align: middle;
+  padding: .35rem .75rem;
+}
