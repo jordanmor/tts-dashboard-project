@@ -25,8 +25,8 @@ public class ProductController {
             ) {
 
         if(orderByDiscount == true) {
-            return productService.findAllAndOrderByDiscount(page, 50, direction);
+            return productService.findAllAndOrderByDiscount(page, 10, direction);
         }
-        return productService.findAll(page, 50, direction, sortBy);
+        return productService.findAll(page, 10, direction, sortBy);
     }
 }
