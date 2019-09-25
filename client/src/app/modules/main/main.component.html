@@ -12,7 +12,7 @@
 </app-table>
 
 <!-- Pagination -->
-<ngb-pagination *ngIf="data.dataset"
+<ngb-pagination *ngIf="data.dataset && data.totalElements > data.pageSize"
     [collectionSize]="data.totalElements" 
     [pageSize]="data.pageSize"
     [(page)]="data.currentPage" 
