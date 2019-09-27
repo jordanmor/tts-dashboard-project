@@ -48,6 +48,7 @@ export class DataService {
     }
     
     response.subscribe(data => {
+      console.log(data);
       const newDataset = new Data({
         dataSetName: datasetName,
         dataset: data.content,
@@ -61,7 +62,18 @@ export class DataService {
       if(datasetName = 'products') {
         newDataset.orderByDiscount = orderByDiscount;
       }
+      console.log(newDataset);
       this.dataSource.next(newDataset);
     });
+  }
+
+  removeItem(datasetName:string, id: number) {
+    this.api.removeItem(datasetName, id).subscribe(s => 
+      this.showData(
+        this.dataSource.value.dataSetName, 
+        this.dataSource.value.currentPage, 
+        this.dataSource.value.isSortDirectionAsc, 
+        this.dataSource.value.sortBy)
+      );
   }
 }

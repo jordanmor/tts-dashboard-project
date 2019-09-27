@@ -13,8 +13,8 @@
                 <th>Full Price <i (click)="sortDataBy('fullPrice')" class="fas fa-sort"></i></th>
                 <th>Sale Price <i (click)="sortDataBy('salePrice')" class="fas fa-sort"></i></th>
                 <th>Discount <i (click)="sortDataBy('discount')" class="fas fa-sort"></i></th>
-                <th>Category <i (click)="sortDataBy('category')" class="fas fa-sort"></i></th>
-                <th>Supplier <i (click)="sortDataBy('supplier')" class="fas fa-sort"></i></th>
+                <th>Category <i (click)="sortDataBy('categoryName')" class="fas fa-sort"></i></th>
+                <th>Supplier <i (click)="sortDataBy('supplierName')" class="fas fa-sort"></i></th>
                 <th>Availability</th>
             </ng-container>
             
@@ -23,7 +23,7 @@
         </thead>
 
         <tbody *ngIf="dataset">
-            <tr *ngFor="let dataItem of dataset" [attr.id]="dataItem.id">
+            <tr *ngFor="let dataItem of dataset" [attr.id]="dataItem.id" [ngClass]="dataItem.id === selectedId ? 'hide' : null">
 
                 <!-- Data -->
                 <td>{{ dataItem.id }}</td>
@@ -34,8 +34,8 @@
                     <td>{{ dataItem.fullPrice | currency }}</td>
                     <td>{{ dataItem.salePrice | currency }}</td>
                     <td>{{ 1 - dataItem.salePrice / dataItem.fullPrice | percent }}</td>
-                    <td>{{ dataItem.category.name }}</td>
-                    <td>{{ dataItem.supplier.name }}</td>
+                    <td [attr.id]="'categoryId_' + dataItem.category.id">{{ dataItem.category.name }}</td>
+                    <td [attr.id]="'supplierId_' + dataItem.supplier.id">{{ dataItem.supplier.name }}</td>
                     <td>{{ dataItem.availability }}</td>
                 </ng-container>
 

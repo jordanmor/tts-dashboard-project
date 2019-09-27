@@ -11,6 +11,7 @@ export class TableComponent implements OnInit {
   @Input() datasetName: string;
   @Input() currentPage: number;
   @Input() dataset: any[];
+  selectedId: number;
 
   constructor(private dataService: DataService) { }
 
@@ -28,8 +29,8 @@ export class TableComponent implements OnInit {
   }
 
   removeItem(data) {
-    console.log('Delete Item');
-    console.log(data);
+    this.selectedId = data.id;
+    this.dataService.removeItem(this.datasetName, data.id);
   }
 
 }
