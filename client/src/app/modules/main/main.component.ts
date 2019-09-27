@@ -14,7 +14,6 @@ export class MainComponent implements OnInit, OnDestroy {
 
   @Input() datasetName: string;
   @Input() datasetTitle: object;
-  defaultField: string = 'id';
 
   data: Data = new Data();
 
@@ -24,8 +23,9 @@ export class MainComponent implements OnInit, OnDestroy {
 
     this.subscription = this.dataService.data.subscribe(data => {
       if(data) {
-        if(data.dataset.length === 0 || data.dataSetName !== this.datasetName) {
-            this.dataService.showData(this.datasetName,  0, true, this.defaultField);
+        if(data.dataset.length === 0 || data.datasetName !== this.datasetName) {
+          data.paginatedRequest.setDatasetName(this.datasetName);
+          this.dataService.showData(data.paginatedRequest);
           } else {
             this.data = data;
         }
@@ -35,7 +35,8 @@ export class MainComponent implements OnInit, OnDestroy {
 
   // Handle pagination
   handlePageChange(page: number) {
-    this.dataService.showData(this.datasetName, page, this.data.isSortDirectionAsc, this.data.sortBy);
+    this.data.paginatedRequest.setPage(page);
+    this.dataService.showData(this.data.paginatedRequest);
   }
 
   ngOnDestroy() {

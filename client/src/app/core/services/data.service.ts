@@ -3,6 +3,7 @@ import { ApiService } from '../../core/http/api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Data } from '../models/data';
 import { PaginatedResponse } from '../models/paginatedResponse';
+import { PaginatedRequest } from '../models/paginatedRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -15,65 +16,45 @@ export class DataService {
 
   constructor(private api: ApiService) { }
 
-  sortDataBy(sortBy: string, page: number, datasetName: string) {
-    let sortDirection = !this.dataSource.value.isSortDirectionAsc;
-    this.showData(datasetName, page, sortDirection, sortBy);
+  sortDataBy(sortBy: string) {
+    const data = this.dataSource.value;
+    const { paginatedRequest } = data;
+    data.isSortDirectionAsc = !data.isSortDirectionAsc;
+    paginatedRequest.setSortDirection(data.isSortDirectionAsc);
+    data.sortBy = sortBy;
+    paginatedRequest.setSortBy(data.sortBy);
+    this.showData(paginatedRequest);
   }
 
-  showData(datasetName: string, page: number, isSortDirectionAsc: boolean, sortBy: string) {
-    let orderByDiscount = false;
-
-    if(page !== 0) {
-      page -= 1;
-    }
-
-    let direction: string;
-    if (isSortDirectionAsc) {
-      direction = 'ASC';
-    } else {
-      direction = 'DESC';
-    }
+  showData(paginatedRequest: PaginatedRequest ) {
 
     let response: Observable<PaginatedResponse>;
 
-    if(datasetName === 'products') {
-      if(sortBy === 'discount') {
-        orderByDiscount = true;
-        response = this.api.getData(datasetName, page, direction, sortBy, true);
-      } else {
-        response = this.api.getData(datasetName, page, direction, sortBy, false);
-      }
-    } else {
-      response = this.api.getData(datasetName, page, direction, sortBy);
+    if(paginatedRequest.getSortBy() === 'discount') {
+      console.log('discount');
+      this.dataSource.value.orderByDiscount = true;
+      paginatedRequest.setOrderByDiscount(true);
     }
+
+    response = this.api.getData(paginatedRequest);
     
     response.subscribe(data => {
-      console.log(data);
       const newDataset = new Data({
-        dataSetName: datasetName,
+        datasetName: paginatedRequest.getDatasetName(),
         dataset: data.content,
-        currentPage: data.number + 1,
+        currentPage: data.number + 1, // page numbers from server start at 0 
         totalElements: data.totalElements,
         pageSize: data.size,
-        isSortDirectionAsc: isSortDirectionAsc,
-        sortBy: sortBy
+        isSortDirectionAsc: this.dataSource.value.isSortDirectionAsc,
+        sortBy: paginatedRequest.getSortBy(),
+        orderByDiscount: paginatedRequest.getOrderByDiscount()
       });
-
-      if(datasetName = 'products') {
-        newDataset.orderByDiscount = orderByDiscount;
-      }
-      console.log(newDataset);
       this.dataSource.next(newDataset);
     });
   }
 
   removeItem(datasetName:string, id: number) {
     this.api.removeItem(datasetName, id).subscribe(s => 
-      this.showData(
-        this.dataSource.value.dataSetName, 
-        this.dataSource.value.currentPage, 
-        this.dataSource.value.isSortDirectionAsc, 
-        this.dataSource.value.sortBy)
-      );
+      this.showData(this.dataSource.value.paginatedRequest));
   }
 }

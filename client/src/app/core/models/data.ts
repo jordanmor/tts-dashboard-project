@@ -1,30 +1,44 @@
+import { PaginatedRequest } from './paginatedRequest';
+
 export class Data {
-  dataSetName?: string;
-  dataset?: any[];
-  currentPage?: number;
-  totalElements?: number;
-  pageSize?: number;
-  isSortDirectionAsc?: boolean;
-  sortBy?: string;
+  datasetName: string;
+  dataset: any[];
+  currentPage: number;
+  totalElements: number;
+  pageSize: number;
+  isSortDirectionAsc: boolean;
+  sortBy: string;
   orderByDiscount?: boolean;
+  paginatedRequest?: PaginatedRequest;
 
   constructor(params: Data = {} as Data) {
     let {
-      dataSetName = '',
+      datasetName = '',
       dataset = [],
       currentPage = 1,
       totalElements = 0,
-      pageSize = 1,
+      pageSize = 10,
       isSortDirectionAsc = true,
-      sortBy = ''
+      sortBy = 'id',
+      orderByDiscount = false
     } = params;
 
-    this.dataSetName = dataSetName;
+    this.datasetName = datasetName;
     this.dataset = dataset;
     this.currentPage = currentPage;
     this.totalElements = totalElements
     this.pageSize = pageSize;
     this.isSortDirectionAsc = isSortDirectionAsc;
     this.sortBy = sortBy;
+    this.orderByDiscount = orderByDiscount;
+    this.paginatedRequest = new PaginatedRequest(
+      this.datasetName,
+      this.currentPage - 1,
+      this.pageSize,
+      this.isSortDirectionAsc ? 'ASC' : 'DESC',
+      this.sortBy,
+      this.orderByDiscount,
+      null
+    )
   }
 }

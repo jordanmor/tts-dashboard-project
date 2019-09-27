@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PaginatedResponse } from '../models/paginatedResponse';
 import { Observable } from 'rxjs';
+import { PaginatedRequest } from '../models/paginatedRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,19 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getData(datasetName: string, page: number, direction: string, sortBy: string, orderByDiscount: boolean = false) {
+  getData(paginatedRequest: PaginatedRequest) {
+    const datasetName = paginatedRequest.getDatasetName();
+    const page = paginatedRequest.getPage();
+    const pageSize = paginatedRequest.getPageSize();
+    const sortDirection = paginatedRequest.getSortDirection();
+    const sortBy = paginatedRequest.getSortBy();
+
     if(datasetName === 'products') {
-      return this.http.get<PaginatedResponse>(`${this.host}/${datasetName}?page=${page}&direction=${direction}&sortBy=${sortBy}&orderByDiscount=${orderByDiscount}`);
+      const orderByDiscount = paginatedRequest.getOrderByDiscount();
+      return this.http.get<PaginatedResponse>(
+        `${this.host}/${datasetName}?page=${page}&pageSize=${pageSize}&direction=${sortDirection}&sortBy=${sortBy}&orderByDiscount=${orderByDiscount}`);
     } else {
-      return this.http.get<PaginatedResponse>(`${this.host}/${datasetName}?page=${page}&direction=${direction}&sortBy=${sortBy}`);
+      return this.http.get<PaginatedResponse>(`${this.host}/${datasetName}?page=${page}&pageSize=${pageSize}&direction=${sortDirection}&sortBy=${sortBy}`);
     }
   }
 

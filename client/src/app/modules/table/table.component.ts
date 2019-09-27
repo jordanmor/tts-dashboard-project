@@ -20,7 +20,7 @@ export class TableComponent implements OnInit {
   }
 
   sortDataBy(productField: string) {
-    this.dataService.sortDataBy(productField, this.currentPage, this.datasetName);
+    this.dataService.sortDataBy(productField);
   }
 
   updateItem(data) {
