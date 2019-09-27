@@ -1,5 +1,8 @@
 package com.tts.dashboard.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -11,12 +14,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
     private String name;
 
-    @NotNull
-    @ManyToOne
+    @ManyToOne(optional=false)
     @JoinColumn(name = "category")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Category category;
 
     @NotNull
@@ -27,14 +29,14 @@ public class Product {
     @Column(nullable = false, columnDefinition = "BOOLEAN")
     private boolean availability;
 
-    @NotNull
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "supplier")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Supplier supplier;
 
     public Product() {}
 
-    public Product(@NotNull String name, @NotNull Category category, @NotNull BigDecimal fullPrice, @NotNull BigDecimal salePrice, boolean availability, @NotNull Supplier supplier) {
+    public Product(String name, Category category, @NotNull BigDecimal fullPrice, @NotNull BigDecimal salePrice, boolean availability, Supplier supplier) {
         this.name = name;
         this.category = category;
         this.fullPrice = fullPrice;

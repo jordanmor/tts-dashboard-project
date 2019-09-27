@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
@@ -17,5 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // Order by sale's discount DESC
     @Query(value = "SELECT * FROM products p ORDER BY 1 - p.sale_price / p.full_price DESC", nativeQuery = true)
     Page<Product> findAllAndOrderByDiscountDesc(Pageable pageable);
+
+    Optional<Product> findByName(String name);
 
 }

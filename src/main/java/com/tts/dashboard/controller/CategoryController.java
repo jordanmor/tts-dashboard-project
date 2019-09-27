@@ -4,24 +4,40 @@ import com.tts.dashboard.model.Category;
 import com.tts.dashboard.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/categories")
 public class CategoryController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
-    @GetMapping(value="/categories")
-    public Page<Category> getCategories(
+    @GetMapping
+    public Page<Category> getAllCategories(
             @RequestParam int page,
             @RequestParam String direction,
             @RequestParam String sortBy
     ) {
         return categoryService.findAll(page, 10, direction, sortBy);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> createCategory(@RequestBody Category category) {
+        return categoryService.createCategory(category);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Category> updateCategory(@RequestBody Category category, @PathVariable long id) {
+        return categoryService.updateCategory(category, id);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Category> deleteCategoryById(@PathVariable long id) {
+        return categoryService.deleteById(id);
     }
 }

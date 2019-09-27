@@ -1,7 +1,6 @@
 package com.tts.dashboard.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="suppliers")
@@ -10,12 +9,11 @@ public class Supplier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
     private String name;
 
     public Supplier() {}
 
-    public Supplier(@NotNull String name) {
+    public Supplier(String name) {
         this.name = name;
     }
 
@@ -41,5 +39,20 @@ public class Supplier {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Supplier supplier = (Supplier) o;
+
+        return id == supplier.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }

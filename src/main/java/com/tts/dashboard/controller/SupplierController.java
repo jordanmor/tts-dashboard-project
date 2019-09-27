@@ -4,24 +4,40 @@ import com.tts.dashboard.model.Supplier;
 import com.tts.dashboard.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/suppliers")
 public class SupplierController {
 
     @Autowired
-    SupplierService supplierService;
+    private SupplierService supplierService;
 
-    @GetMapping(value="/suppliers")
+    @GetMapping
     public Page<Supplier> getSuppliers(
             @RequestParam int page,
             @RequestParam String direction,
             @RequestParam String sortBy
     ) {
         return supplierService.findAll(page, 10, direction, sortBy);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> createSupplier(@RequestBody Supplier category) {
+        return supplierService.createSupplier(category);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Supplier> updateSupplier(@RequestBody Supplier category, @PathVariable long id) {
+        return supplierService.updateSupplier(category, id);
+    }
+
+    @DeleteMapping(value="{id}")
+    public ResponseEntity<Supplier> deleteSupplierById(@PathVariable long id) {
+        return supplierService.deleteSupplierById(id);
     }
 }
