@@ -59,7 +59,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-/temp
+temp/
 
 # System Files
 .DS_Store

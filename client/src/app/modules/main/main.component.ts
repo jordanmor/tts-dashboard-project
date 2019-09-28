@@ -6,6 +6,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalProductFormComponent } from '../../modules/products/modal-product-form/modal-product-form.component';
 import { ModalCategoryFormComponent } from '../categories/modal-category-form/modal-category-form.component';
 import { ModalSupplierFormComponent } from '../suppliers/modal-supplier-form/modal-supplier-form.component';
+import { Category } from 'src/app/core/models/category';
+import { Supplier } from 'src/app/core/models/supplier';
 
 @Component({
   selector: 'app-main',
@@ -18,6 +20,8 @@ export class MainComponent implements OnInit {
   @Input() datasetTitle: object;
 
   data: Data = new Data();
+  categories: Category[];
+  suppliers: Supplier[];
 
   constructor(
     private dataService: DataService, 
@@ -27,6 +31,11 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.data.datasetName = this.datasetName;
     this.showData(this.createPaginatedRequest(this.data));
+    this.dataService.getAllCategories().subscribe(categories => this.categories = categories);
+    this.dataService.getAllSuppliers().subscribe(suppliers => {
+      this.suppliers = suppliers;
+      console.log(suppliers);
+    });
   }
 
   // Handle pagination
@@ -55,11 +64,12 @@ export class MainComponent implements OnInit {
   }
 
   showData(paginatedRequest: PaginatedRequest) {
-    this.dataService.getData(paginatedRequest).subscribe(response => {
+    this.dataService.getPaginatedData(paginatedRequest).subscribe(response => {
       this.data.dataset = response.content;
       this.data.currentPage = response.number + 1;  // page numbers from server start at 0 
       this.data.totalElements = response.totalElements;
       this.data.pageSize = response.size;
+      console.log(response);
     });
   }
 
@@ -73,6 +83,8 @@ export class MainComponent implements OnInit {
     let modalRef: any;
     if(this.datasetName === 'products') {
       modalRef = this.modalService.open(ModalProductFormComponent);
+      modalRef.componentInstance.categories = this.categories;
+      modalRef.componentInstance.suppliers = this.suppliers;
       modalRef.componentInstance.id = 1;
     } else if(this.datasetName === 'categories') {
       modalRef = this.modalService.open(ModalCategoryFormComponent);
@@ -82,7 +94,6 @@ export class MainComponent implements OnInit {
       modalRef.componentInstance.id = 3;
     }
     modalRef.result.then((result: any) => {
-      console.log(result);
       this.dataService.createItem(result, this.datasetName).subscribe(res => {
         this.showData(this.createPaginatedRequest(this.data));
       });

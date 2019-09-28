@@ -13,17 +13,15 @@
         <div formGroupName="category" class="form-group">
             <label for="productCategory">Product Category</label>
             <select formControlName="id" class="form-control" id="productCategory">
-                <option value="3">Horses!</option>
-                <option value="4">Garden</option>
-                <option value="5">Health</option>
+                <option value="" selected disabled hidden>Choose a Category</option>
+                <option *ngFor="let category of categories" [attr.value]="category.id">{{ category.name }}</option>
             </select>
         </div>
         <div formGroupName="supplier" class="form-group">
             <label for="productSupplier">Product Supplier</label>
             <select formControlName="id" type="text" class="form-control" id="productSupplier">
-                <option value="1">3M</option>
-                <option value="2">Abbott Medical Optics, Inc.</option>
-                <option value="3">Abbott Nutrition</option>
+                <option value="" selected disabled hidden>Choose a Supplier</option>
+                <option *ngFor="let supplier of suppliers" [attr.value]="supplier.id">{{ supplier.name }}</option>
             </select>
         </div>
         <div class="form-group">
@@ -43,5 +41,5 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="activeModal.close()">Close</button>
+    <button type="button" class="btn btn-danger" (click)="activeModal.dismiss()">Close</button>
 </div>
