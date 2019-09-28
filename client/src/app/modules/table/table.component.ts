@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
@@ -11,6 +11,9 @@ export class TableComponent implements OnInit {
   @Input() datasetName: string;
   @Input() currentPage: number;
   @Input() dataset: any[];
+  @Output() onUpdateItem = new EventEmitter();
+  @Output() onRemoveItem = new EventEmitter();
+  @Output() onSortDataBy = new EventEmitter();
   selectedId: number;
 
   constructor(private dataService: DataService) { }
@@ -20,17 +23,16 @@ export class TableComponent implements OnInit {
   }
 
   sortDataBy(productField: string) {
-    this.dataService.sortDataBy(productField);
+    this.onSortDataBy.emit(productField);
   }
 
-  updateItem(data) {
-    console.log('Update Item');
-    console.log(data);
+  updateItem(data: any) {
+    this.onUpdateItem.emit(data);
   }
 
-  removeItem(data) {
+  removeItem(data: any) {
     this.selectedId = data.id;
-    this.dataService.removeItem(this.datasetName, data.id);
+    this.onRemoveItem.emit(data.id);
   }
 
 }

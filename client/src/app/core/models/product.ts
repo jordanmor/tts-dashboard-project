@@ -1,15 +1,15 @@
 export class Product {
   id: number;
   name: string;
-  category: {
-    categoryId: number;
-    categoryName: string;
-  };
   fullPrice: number;
   salePrice: number;
-  availability: boolean;
+  category: {
+    id: number;
+    name: string;
+  };
   supplier: {
-    supplierId: number;
-    supplierName: string;
+    id: number;
+    name: string;
   }
+  availability: boolean;
 }

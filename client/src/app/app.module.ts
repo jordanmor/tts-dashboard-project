@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './core/navbar/navbar.component';
@@ -17,6 +16,7 @@ import { ModalSupplierFormComponent } from './modules/suppliers/modal-supplier-f
 import { MainComponent } from './modules/main/main.component';
 import { TableComponent } from './modules/table/table.component';
 import { DataService } from './core/services/data.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,9 @@ import { DataService } from './core/services/data.service';
 BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [NgbActiveModal, DataService],
   entryComponents: [

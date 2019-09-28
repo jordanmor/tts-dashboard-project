@@ -1,6 +1,8 @@
 <!-- Page Header -->
 <app-main-page-header
   [datasetTitle]="datasetTitle"
+  [datasetName]="datasetName"
+  (onModalFormSubmit)="handleModalFormSubmit()"
 ></app-main-page-header>
 
 <!-- Table -->
@@ -8,6 +10,9 @@
   [datasetName]="datasetName"
   [dataset]="data.dataset"
   [currentPage]="data.currentPage"
+  (onUpdateItem)="handleUpdateItem($event)"
+  (onRemoveItem)="handleRemoveItem($event)"
+  (onSortDataBy)="handleSortDataBy($event)"
 >
 </app-table>
 

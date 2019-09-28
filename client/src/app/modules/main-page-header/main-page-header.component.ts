@@ -1,6 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalProductFormComponent } from '../../modules/products/modal-product-form/modal-product-form.component';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-main-page-header',
@@ -12,8 +10,10 @@ export class MainPageHeaderComponent implements OnInit {
   show: boolean = false;
   alertType: string = 'success';
   @Input() datasetTitle: string;
+  @Input() datasetName: string;
+  @Output() onModalFormSubmit = new EventEmitter();
 
-  constructor(public modalService: NgbModal) { }
+  constructor() { }
 
   ngOnInit() {
   }
@@ -23,12 +23,6 @@ export class MainPageHeaderComponent implements OnInit {
   }
 
   openModal() {
-    const modalRef = this.modalService.open(ModalProductFormComponent);
-    // modalRef.result.then((result) => {
-    //   console.log(result);
-    // }).catch((error) => {
-    //   console.log(error);
-    // });
+    this.onModalFormSubmit.emit();
   }
-
 }
