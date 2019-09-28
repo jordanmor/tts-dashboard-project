@@ -16,33 +16,34 @@ public class Product {
 
     private String name;
 
+    @NotNull
+    private BigDecimal fullPrice;
+    
+    @NotNull
+    private BigDecimal salePrice;
+
     @ManyToOne(optional=false)
     @JoinColumn(name = "category")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Category category;
-
-    @NotNull
-    private BigDecimal fullPrice;
-    @NotNull
-    private BigDecimal salePrice;
-
-    @Column(nullable = false, columnDefinition = "BOOLEAN")
-    private boolean availability;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "supplier")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Supplier supplier;
 
+    @Column(nullable = false, columnDefinition = "BOOLEAN")
+    private boolean availability;
+
     public Product() {}
 
-    public Product(String name, Category category, @NotNull BigDecimal fullPrice, @NotNull BigDecimal salePrice, boolean availability, Supplier supplier) {
+    public Product(String name, @NotNull BigDecimal fullPrice, @NotNull BigDecimal salePrice, Category category, Supplier supplier, boolean availability) {
         this.name = name;
-        this.category = category;
         this.fullPrice = fullPrice;
         this.salePrice = salePrice;
-        this.availability = availability;
+        this.category = category;
         this.supplier = supplier;
+        this.availability = availability;
     }
 
     public long getId() {
@@ -61,14 +62,6 @@ public class Product {
         this.name = name;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public BigDecimal getFullPrice() {
         return fullPrice;
     }
@@ -85,12 +78,12 @@ public class Product {
         this.salePrice = salePrice;
     }
 
-    public boolean isAvailability() {
-        return availability;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Supplier getSupplier() {
@@ -101,16 +94,24 @@ public class Product {
         this.supplier = supplier;
     }
 
+    public boolean isAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(boolean availability) {
+        this.availability = availability;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", category=" + category +
                 ", fullPrice=" + fullPrice +
                 ", salePrice=" + salePrice +
-                ", availability=" + availability +
+                ", category=" + category +
                 ", supplier=" + supplier +
+                ", availability=" + availability +
                 '}';
     }
 }
