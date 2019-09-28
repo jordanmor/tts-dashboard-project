@@ -19,10 +19,11 @@ public class SupplierController {
     @GetMapping
     public Page<Supplier> getSuppliers(
             @RequestParam int page,
+            @RequestParam int pageSize,
             @RequestParam String direction,
             @RequestParam String sortBy
     ) {
-        return supplierService.findAll(page, 10, direction, sortBy);
+        return supplierService.findAll(page, pageSize, direction, sortBy);
     }
 
     @PostMapping

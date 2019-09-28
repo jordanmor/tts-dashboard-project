@@ -20,6 +20,7 @@ public class ProductController {
     @GetMapping
     public Page<Product> getProducts(
             @RequestParam int page,
+            @RequestParam int pageSize,
             @RequestParam String direction,
             @RequestParam String sortBy,
             @RequestParam boolean orderByDiscount
@@ -28,7 +29,7 @@ public class ProductController {
         if(orderByDiscount == true) {
             return productService.findAllAndOrderByDiscount(page, 10, direction);
         }
-        return productService.findAll(page, 10, direction, sortBy);
+        return productService.findAll(page, pageSize, direction, sortBy);
     }
 
     @PostMapping

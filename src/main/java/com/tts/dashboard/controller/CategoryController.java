@@ -19,10 +19,11 @@ public class CategoryController {
     @GetMapping
     public Page<Category> getAllCategories(
             @RequestParam int page,
+            @RequestParam int pageSize,
             @RequestParam String direction,
             @RequestParam String sortBy
     ) {
-        return categoryService.findAll(page, 10, direction, sortBy);
+        return categoryService.findAll(page, pageSize, direction, sortBy);
     }
 
     @PostMapping
