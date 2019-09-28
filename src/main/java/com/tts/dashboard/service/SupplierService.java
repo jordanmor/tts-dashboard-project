@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,11 +22,14 @@ public class SupplierService {
     @Autowired
     SupplierRepository supplierRepository;
 
+    public List<Supplier> findAllSuppliers() {
+        return supplierRepository.findAll();
+    }
+
     public Page<Supplier> findAll(int page, int size, String direction, String sortBy) {
         Pageable paginatedPages = PageRequest.of(page, size, Sort.Direction.fromString(direction), sortBy);
         return supplierRepository.findAll(paginatedPages);
     }
-
 
     public ResponseEntity<String> createSupplier(Supplier supplier) {
         Optional<Supplier> presentSupplier = supplierRepository.findByName(supplier.getName());

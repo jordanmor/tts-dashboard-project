@@ -29,7 +29,7 @@ public class ProductService {
     @Autowired
     SupplierRepository supplierRepository;
 
-    public Page<Product> findAll(int page, int size, String direction, String sortBy ) {
+    public Page<Product> findAllPaginated(int page, int size, String direction, String sortBy ) {
         Pageable paginatedPages = PageRequest.of(page, size, Sort.Direction.fromString(direction), sortBy);
         return productRepository.findAll(paginatedPages);
     }

@@ -1,5 +1,6 @@
 package com.tts.dashboard.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -27,8 +28,9 @@ public class Product {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Category category;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "supplier")
+    @JsonIgnoreProperties("products")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Supplier supplier;
 

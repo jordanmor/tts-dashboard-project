@@ -18,7 +18,7 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping
-    public Page<Product> getProducts(
+    public Page<Product> getProductsPaginated(
             @RequestParam int page,
             @RequestParam int pageSize,
             @RequestParam String direction,
@@ -29,7 +29,7 @@ public class ProductController {
         if(orderByDiscount == true) {
             return productService.findAllAndOrderByDiscount(page, 10, direction);
         }
-        return productService.findAll(page, pageSize, direction, sortBy);
+        return productService.findAllPaginated(page, pageSize, direction, sortBy);
     }
 
     @PostMapping

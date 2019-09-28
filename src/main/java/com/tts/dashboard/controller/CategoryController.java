@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/categories")
@@ -17,13 +19,13 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping
-    public Page<Category> getAllCategories(
+    public Page<Category> getAllCategoriesPaginated(
             @RequestParam int page,
             @RequestParam int pageSize,
             @RequestParam String direction,
             @RequestParam String sortBy
     ) {
-        return categoryService.findAll(page, pageSize, direction, sortBy);
+        return categoryService.findAllCategoriesPaginated(page, pageSize, direction, sortBy);
     }
 
     @PostMapping
@@ -40,5 +42,10 @@ public class CategoryController {
     @DeleteMapping("{id}")
     public ResponseEntity<Category> deleteCategoryById(@PathVariable long id) {
         return categoryService.deleteById(id);
+    }
+
+    @GetMapping("{all}")
+    public List<Category> findAllCategories() {
+        return categoryService.findAllCategories();
     }
 }

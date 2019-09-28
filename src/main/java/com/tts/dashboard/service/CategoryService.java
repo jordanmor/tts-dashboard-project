@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,7 +22,11 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public Page<Category> findAll(int page, int size, String direction, String sortBy) {
+    public List<Category> findAllCategories() {
+        return categoryRepository.findAll();
+    }
+
+    public Page<Category> findAllCategoriesPaginated(int page, int size, String direction, String sortBy) {
         Pageable paginatedPages = PageRequest.of(page, size, Sort.Direction.fromString(direction), sortBy);
         return categoryRepository.findAll(paginatedPages);
     }
