@@ -3,28 +3,19 @@
 
         <thead>
           <tr>
-            <!-- Product Headers -->
+
+            <!-- Table Headers -->
+            <th>ID <i (click)="sortDataBy('id')" class="fas fa-sort"></i></th>
+            <th>Name <i (click)="sortDataBy('name')" class="fas fa-sort"></i></th>
+
+            <!-- Product Headers Only -->
             <ng-container *ngIf="datasetName === 'products'">
-                <th># <i (click)="sortDataBy('productId')" class="fas fa-sort"></i></th>
-                <th>Name <i (click)="sortDataBy('productName')" class="fas fa-sort"></i></th>
                 <th>Full Price <i (click)="sortDataBy('fullPrice')" class="fas fa-sort"></i></th>
                 <th>Sale Price <i (click)="sortDataBy('salePrice')" class="fas fa-sort"></i></th>
                 <th>Discount <i (click)="sortDataBy('discount')" class="fas fa-sort"></i></th>
-                <th>Category <i (click)="sortDataBy('category')" class="fas fa-sort"></i></th>
-                <th>Supplier <i (click)="sortDataBy('supplier')" class="fas fa-sort"></i></th>
+                <th>Category <i (click)="sortDataBy('category.name')" class="fas fa-sort"></i></th>
+                <th>Supplier <i (click)="sortDataBy('supplier.name')" class="fas fa-sort"></i></th>
                 <th>Availability</th>
-            </ng-container>
-
-            <!-- Category Headers -->
-            <ng-container *ngIf="datasetName === 'categories'">
-                <th># <i (click)="sortDataBy('categoryId')" class="fas fa-sort"></i></th>
-                <th>Name <i (click)="sortDataBy('categoryName')" class="fas fa-sort"></i></th>
-            </ng-container>
-
-            <!-- Supplier Headers -->
-            <ng-container *ngIf="datasetName === 'suppliers'">
-                <th># <i (click)="sortDataBy('supplierId')" class="fas fa-sort"></i></th>
-                <th>Name <i (click)="sortDataBy('supplierName')" class="fas fa-sort"></i></th>
             </ng-container>
             
             <th></th>
@@ -32,38 +23,85 @@
         </thead>
 
         <tbody *ngIf="dataset">
-            <tr *ngFor="let dataItem of dataset">
-                <!-- Product Data -->
-                <ng-container *ngIf="datasetName === 'products'">
-                    <td>{{ dataItem.productId }}</td>
-                    <td>{{ dataItem.productName }}</td>
-                    <td>{{ dataItem.fullPrice | currency }}</td>
-                    <td>{{ dataItem.salePrice | currency }}</td>
-                    <td>{{ 1 - dataItem.salePrice / dataItem.fullPrice | percent }}</td>
-                    <td>{{ dataItem.category.categoryName }}</td>
-                    <td>{{ dataItem.supplier.supplierName }}</td>
-                    <td>{{ dataItem.availability }}</td>
+            <ng-container *ngFor="let dataItem of dataset">
+
+                <!-- Display Data Item -->
+                <ng-container *ngIf="dataItem.id !== selectedId; else showForm">
+                    <tr [attr.id]="dataItem.id">
+
+                        <!-- Data -->
+                        <td>{{ dataItem.id }}</td>
+                        <td>{{ dataItem.name }}</td>
+
+                        <!-- Product Data Only -->
+                        <ng-container *ngIf="datasetName === 'products'">
+                            <td>{{ dataItem.fullPrice | currency }}</td>
+                            <td>{{ dataItem.salePrice | currency }}</td>
+                            <td>{{ 1 - dataItem.salePrice / dataItem.fullPrice | percent }}</td>
+                            <td [attr.id]="'categoryId_' + dataItem.category.id">{{ dataItem.category.name }}</td>
+                            <td [attr.id]="'supplierId_' + dataItem.supplier.id">{{ dataItem.supplier.name }}</td>
+                            <td>{{ dataItem.availability }}</td>
+                        </ng-container>
+
+                        <td class="text-right" id="tableDataBtns">
+                            <div class="btn-group" role="group">
+                                <button type="button" (click)="editItem(dataItem)" class="btn btn-secondary"><i class="far fa-edit"></i></button>
+                                <button type="button" (click)="removeItem(dataItem)" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                            </div>
+                        </td>
+                    </tr>
                 </ng-container>
 
-                <!-- Category Data -->
-                <ng-container *ngIf="datasetName === 'categories'">
-                    <td>{{ dataItem.categoryId }}</td>
-                    <td>{{ dataItem.categoryName }}</td>
-                </ng-container>
+                <!-- Update Data Item Form -->
+                <ng-template #showForm>
+                    <tr [formGroup]="datasetName === 'products' ? updateProductForm : updateItemForm" [attr.id]="dataItem.id">
+                        <ng-container>
+                            <!-- Data -->
+                            <td>{{ dataItem.id }}</td>
+                            <td>
+                                <input type="text" [value]="dataItem.name" formControlName="name" autofocus>
+                            </td>
+                        </ng-container>
 
-                <!-- Supplier Data -->
-                <ng-container *ngIf="datasetName === 'suppliers'">
-                    <td>{{ dataItem.supplierId }}</td>
-                    <td>{{ dataItem.supplierName }}</td>
-                </ng-container>
+                        <!-- Product Data Only -->
+                        <ng-container *ngIf="datasetName === 'products'">
+                            <td>
+                                <input type="number" min="0.01" step="0.01" [value]="dataItem.fullPrice" formControlName="fullPrice">
+                            </td>
 
-                <td class="text-right" id="tableDataBtns">
-                    <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-secondary"><i class="far fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                    </div>
-                </td>
-            </tr>
+                            <td>
+                                <input type="number" min="0.01" step="0.01" [value]="dataItem.salePrice" formControlName="salePrice">
+                            </td>
+
+                            <td>{{ 1 - dataItem.salePrice / dataItem.fullPrice | percent }}</td>
+
+                            <td formGroupName="category">
+                                <select formControlName="id" type="text" class="form-control" [attr.id]="'categoryId_' + dataItem.category.id">
+                                    <option *ngFor="let category of categories" [selected]="category.id === dataItem.category.id" [attr.value]="category.id">{{ category.name }}</option>
+                                </select>
+                            </td>
+
+                            <td formGroupName="supplier">
+                                <select formControlName="id" type="text" class="form-control" [attr.id]="'supplierId_' + dataItem.supplier.id">>
+                                    <option *ngFor="let supplier of suppliers" [selected]="supplier.id === dataItem.supplier.id" [attr.value]="supplier.id">{{ supplier.name }}</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <input type="checkbox" [checked]="dataItem.availability" formControlName="availability" autofocus>
+                            </td>
+                        </ng-container>
+
+                        <td class="text-right" id="tableDataBtns">
+                            <div class="btn-group" role="group">
+                                <button type="button" (click)="updateDataItem(dataItem)" class="btn btn-secondary"><i class="far fa-save"></i></button>
+                                <button type="button" (click)="cancelEdit()" class="btn btn-danger"><i class="far fa-window-close"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+
+            </ng-container> <!--End of main dataset container -->
         </tbody>
     </table>
 </div>

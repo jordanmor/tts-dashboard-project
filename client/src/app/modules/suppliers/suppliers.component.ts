@@ -8,7 +8,6 @@ import { Component} from '@angular/core';
 export class SuppliersComponent  {
 
   datasetName: string = 'suppliers';
-  defaultField: string = 'supplierId';
   datasetTitle: object = {
     singular: "Supplier",
     plural: "Suppliers"

@@ -1,5 +1,9 @@
 package com.tts.dashboard.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -9,62 +13,55 @@ import java.math.BigDecimal;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long productId;
+    private long id;
 
-    @NotNull
-    private String productName;
-
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "category")
-    private Category category;
+    private String name;
 
     @NotNull
     private BigDecimal fullPrice;
+    
     @NotNull
     private BigDecimal salePrice;
+
+    @ManyToOne(optional=false)
+    @JoinColumn(name = "category")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "supplier")
+    @JsonIgnoreProperties("products")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Supplier supplier;
 
     @Column(nullable = false, columnDefinition = "BOOLEAN")
     private boolean availability;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "supplier")
-    private Supplier supplier;
-
     public Product() {}
 
-    public Product(@NotNull String productName, @NotNull Category category, @NotNull BigDecimal fullPrice, @NotNull BigDecimal salePrice, boolean availability, @NotNull Supplier supplier) {
-        this.productName = productName;
-        this.category = category;
+    public Product(String name, @NotNull BigDecimal fullPrice, @NotNull BigDecimal salePrice, Category category, Supplier supplier, boolean availability) {
+        this.name = name;
         this.fullPrice = fullPrice;
         this.salePrice = salePrice;
-        this.availability = availability;
-        this.supplier = supplier;
-    }
-
-    public long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(long productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
         this.category = category;
+        this.supplier = supplier;
+        this.availability = availability;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public BigDecimal getFullPrice() {
@@ -83,12 +80,12 @@ public class Product {
         this.salePrice = salePrice;
     }
 
-    public boolean isAvailability() {
-        return availability;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Supplier getSupplier() {
@@ -99,16 +96,24 @@ public class Product {
         this.supplier = supplier;
     }
 
+    public boolean isAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(boolean availability) {
+        this.availability = availability;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
-                "productId=" + productId +
-                ", productName='" + productName + '\'' +
-                ", category=" + category +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", fullPrice=" + fullPrice +
                 ", salePrice=" + salePrice +
-                ", availability=" + availability +
+                ", category=" + category +
                 ", supplier=" + supplier +
+                ", availability=" + availability +
                 '}';
     }
 }

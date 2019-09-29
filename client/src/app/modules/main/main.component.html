@@ -1,18 +1,25 @@
 <!-- Page Header -->
 <app-main-page-header
   [datasetTitle]="datasetTitle"
+  [datasetName]="datasetName"
+  (onModalFormSubmit)="handleModalFormSubmit()"
 ></app-main-page-header>
 
 <!-- Table -->
 <app-table
   [datasetName]="datasetName"
   [dataset]="data.dataset"
+  [categories]="categories"
+  [suppliers]="suppliers"
   [currentPage]="data.currentPage"
+  (onUpdateDataItem)="handleUpdateDataItem($event)"
+  (onRemoveItem)="handleRemoveItem($event)"
+  (onSortDataBy)="handleSortDataBy($event)"
 >
 </app-table>
 
 <!-- Pagination -->
-<ngb-pagination *ngIf="data.dataset"
+<ngb-pagination *ngIf="data.dataset && data.totalElements > data.pageSize"
     [collectionSize]="data.totalElements" 
     [pageSize]="data.pageSize"
     [(page)]="data.currentPage" 

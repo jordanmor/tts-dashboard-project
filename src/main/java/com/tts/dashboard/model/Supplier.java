@@ -1,48 +1,58 @@
 package com.tts.dashboard.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Entity
 @Table(name="suppliers")
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long supplierId;
+    private long id;
 
-    @NotNull
-    private String supplierName;
-
-    public Supplier(@NotNull String supplierName) {
-        this.supplierName = supplierName;
-    }
+    private String name;
 
     public Supplier() {}
 
-    public long getSupplierId() {
-        return supplierId;
+    public Supplier(String name) {
+        this.name = name;
     }
 
-    public void setSupplierId(long supplierId) {
-        this.supplierId = supplierId;
+    public long getId() {
+        return id;
     }
 
-    public String getSupplierName() {
-        return supplierName;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "Supplier{" +
-                "supplierId=" + supplierId +
-                ", supplierName='" + supplierName + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Supplier supplier = (Supplier) o;
+
+        return id == supplier.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }
