@@ -2,7 +2,7 @@
   background-color: rgba(200, 233, 199, 0.4) !important;
 }
 
-input {
+table input {
   border-radius: 4px;
   padding: .35rem .5rem;
   width: 80%;;
@@ -10,4 +10,46 @@ input {
 
 select {
   width: 100%;
+}
+
+label {
+  padding: 0;
+  margin: 0;
+}
+
+
+/* ----- CHECKBOX STYLES ----- */
+
+td.checkbox-container {
+  vertical-align: middle;
+  text-align: center;
+}
+
+td .checkbox-label,
+td .checkbox-label span {
+  height: 18px;
+}
+
+/* Hide the default checkbox */
+td .checkbox-label input {
+  display: none;
+}
+
+/* Style the artificial checkbox */
+td .checkbox-label span {
+  display: inline-block;
+  position: relative;
+  width: 18px;
+  border: 1px solid grey;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+/* Style its checked state...with a ticked icon */
+td .checkbox-label [type=checkbox]:checked + span:before {
+  content: '\2714';
+  position: absolute;
+  font-size: .95rem;
+  top: -5px;
+  left: 0;
 }

@@ -87,8 +87,11 @@
                                 </select>
                             </td>
 
-                            <td>
-                                <input type="checkbox" [checked]="dataItem.availability" formControlName="availability" autofocus>
+                            <td class="checkbox-container">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" [checked]="dataItem.availability" formControlName="availability" autofocus>
+                                    <span class=""></span>
+                                </label>
                             </td>
                         </ng-container>
 
