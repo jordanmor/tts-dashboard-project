@@ -27,7 +27,7 @@ public class ProductController {
             ) {
 
         if(orderByDiscount == true) {
-            return productService.findAllAndOrderByDiscount(page, 10, direction);
+            return productService.findAllAndOrderByDiscount(page, pageSize, direction);
         }
         return productService.findAllPaginated(page, pageSize, direction, sortBy);
     }

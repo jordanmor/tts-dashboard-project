@@ -58,7 +58,6 @@ public class ProductService {
 
     public ResponseEntity<Product> updateProduct(Product product, long id) {
         Optional<Product> productOptional = productRepository.findById(id);
-        System.out.println(productOptional.get());
         if (!productOptional.isPresent()) {
             // Sends back a status of 404 Not Found
             return ResponseEntity.notFound().build();
