@@ -13,14 +13,14 @@
         <div formGroupName="category" class="form-group">
             <label for="productCategory">Product Category</label>
             <select formControlName="id" class="form-control" id="productCategory">
-                <option value="" selected disabled hidden>Choose a Category</option>
+                <option selected disabled hidden>Choose a Category</option>
                 <option *ngFor="let category of categories" [attr.value]="category.id">{{ category.name }}</option>
             </select>
         </div>
         <div formGroupName="supplier" class="form-group">
             <label for="productSupplier">Product Supplier</label>
             <select formControlName="id" type="text" class="form-control" id="productSupplier">
-                <option value="" selected disabled hidden>Choose a Supplier</option>
+                <option selected disabled hidden>Choose a Supplier</option>
                 <option *ngFor="let supplier of suppliers" [attr.value]="supplier.id">{{ supplier.name }}</option>
             </select>
         </div>

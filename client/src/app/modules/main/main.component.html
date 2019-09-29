@@ -9,8 +9,10 @@
 <app-table
   [datasetName]="datasetName"
   [dataset]="data.dataset"
+  [categories]="categories"
+  [suppliers]="suppliers"
   [currentPage]="data.currentPage"
-  (onUpdateItem)="handleUpdateItem($event)"
+  (onUpdateDataItem)="handleUpdateDataItem($event)"
   (onRemoveItem)="handleRemoveItem($event)"
   (onSortDataBy)="handleSortDataBy($event)"
 >

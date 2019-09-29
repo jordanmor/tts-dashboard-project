@@ -34,7 +34,6 @@ export class MainComponent implements OnInit {
     this.dataService.getAllCategories().subscribe(categories => this.categories = categories);
     this.dataService.getAllSuppliers().subscribe(suppliers => {
       this.suppliers = suppliers;
-      console.log(suppliers);
     });
   }
 
@@ -50,7 +49,7 @@ export class MainComponent implements OnInit {
     });
   }
 
-  handleUpdateItem(dataItem: any) {
+  handleUpdateDataItem(dataItem: any) {
     this.dataService.updateData(dataItem, this.datasetName).subscribe(res => {
       this.showData(this.createPaginatedRequest(this.data));
     });
@@ -69,7 +68,6 @@ export class MainComponent implements OnInit {
       this.data.currentPage = response.number + 1;  // page numbers from server start at 0 
       this.data.totalElements = response.totalElements;
       this.data.pageSize = response.size;
-      console.log(response);
     });
   }
 
