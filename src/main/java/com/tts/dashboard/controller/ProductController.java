@@ -1,6 +1,5 @@
 package com.tts.dashboard.controller;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.tts.dashboard.model.Product;
 import com.tts.dashboard.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -23,13 +23,15 @@ public class ProductController {
             @RequestParam int pageSize,
             @RequestParam String direction,
             @RequestParam String sortBy,
-            @RequestParam boolean orderByDiscount
+            @RequestParam(defaultValue = "false") boolean sortByDiscount,
+            @RequestParam(defaultValue = "false") boolean filtered,
+            @RequestParam(required=false) String filterBy,
+            @RequestParam(required=false) String filterAlsoBy
             ) {
-
-        if(orderByDiscount == true) {
-            return productService.findAllAndOrderByDiscount(page, pageSize, direction);
+        if(filtered) {
+            return productService.findProductsFilteredAndPaginated(page, pageSize, direction, sortBy, sortByDiscount, filterBy, filterAlsoBy);
         }
-        return productService.findAllPaginated(page, pageSize, direction, sortBy);
+        return productService.findProductsPaginated(page, pageSize, direction, sortBy, sortByDiscount);
     }
 
     @PostMapping
