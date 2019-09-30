@@ -1,9 +1,19 @@
 :host {
   --color-primary: #3a5a78;
+  --color-primary-faded: rgba(58,90,120, 0.6);
 }
 
 h2 {
   color: var(--color-primary);
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+ngb-pagination ::ng-deep .pagination {
+  margin-bottom: 0;
 }
 
 ngb-pagination ::ng-deep .page-item.active .page-link {
@@ -19,4 +29,22 @@ ngb-pagination ::ng-deep .page-item .page-link {
 
 ngb-pagination ::ng-deep .page-link:focus {
   box-shadow: 0 0 0 0.2rem rgba(58,90,120,.25);
+}
+
+.page-size {
+  margin-left: 1rem;
+}
+
+.page-size .btn-outline-secondary {
+  border-color: var(--color-primary-faded);
+  font-weight: 600;
+}
+
+.page-size .dropdown-menu {
+  min-width: 2rem;
+}
+
+.page-size .dropdown-item {
+  color: var(--color-primary);
+  font-weight: bold;
 }

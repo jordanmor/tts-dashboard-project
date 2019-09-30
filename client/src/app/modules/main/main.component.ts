@@ -99,4 +99,9 @@ export class MainComponent implements OnInit {
       // console.log(error);
     });
   }
+
+  choosePageSize(pageSize: number) {
+    this.data.pageSize = pageSize;
+    this.showData(this.createPaginatedRequest(this.data));
+  }
 }
