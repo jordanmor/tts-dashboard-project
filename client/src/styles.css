@@ -1,13 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
-.table-container {
-  margin-top: 15px;
+:host {
+  --color-primary: #3a5a78;
+  --color-primary-faded: rgba(58,90,120, 0.6);
+  --color-secondary: #216bab;
+  --color-tertiary: #f7941f;
+  --color-primary-bg: #e4eff6;
+  --color-primary-shadow: rgba(228,239,246,.25);
 }
 
-th {
-  white-space: nowrap;
+h2 {
+  color: var(--color-primary);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  margin: 0;
 }
 
-table td {
-  vertical-align: middle;
-  padding: .35rem .75rem;
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.btn {
+  border-color: var(--color-primary-faded);
+}
+
+.btn-secondary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+
+}
+
+.btn-danger {
+  background-color: var(--color-tertiary);
+  border-color: var(--color-tertiary);
+}
+
+.btn-outline-secondary {
+  font-weight: bold;
+  border-color: rgba(58,90,120, 0.9);
+  color: rgba(58,90,120, 0.9);
+}
+
+.btn-outline-secondary:hover {
+  color: #fff;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary-faded);
+}
+
+.show>.btn-outline-secondary.dropdown-toggle {
+  color: #fff;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary-faded);
+}
+
+.btn-outline-secondary:focus,
+.show>.btn-outline-secondary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem var(--color-primary-shadow);
 }

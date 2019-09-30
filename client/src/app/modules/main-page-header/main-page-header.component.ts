@@ -11,7 +11,9 @@ export class MainPageHeaderComponent implements OnInit {
   alertType: string = 'success';
   @Input() datasetTitle: string;
   @Input() datasetName: string;
+  @Input() totalDataItems: number;
   @Output() onModalFormSubmit = new EventEmitter();
+  filterOn: boolean;
 
   constructor() { }
 

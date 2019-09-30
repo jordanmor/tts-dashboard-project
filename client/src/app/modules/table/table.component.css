@@ -1,3 +1,8 @@
+:host {
+  --color-primary: #3a5a78;
+  --color-tertiary: #f7941f;
+}
+
 .hide {
   background-color: rgba(200, 233, 199, 0.4) !important;
 }
@@ -17,6 +22,28 @@ label {
   margin: 0;
 }
 
+.table-container {
+  margin-top: 15px;
+}
+
+.table-responsive>.table-bordered {
+  border-left: 14px solid var(--color-tertiary);
+}
+
+th {
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+table td {
+  font-family: 'Roboto', sans-serif;
+  vertical-align: middle;
+  padding: .35rem .75rem;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(228,239,246,.15);
+}
 
 /* ----- CHECKBOX STYLES ----- */
 

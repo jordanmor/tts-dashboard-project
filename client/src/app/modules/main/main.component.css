@@ -1,0 +1,22 @@
+:host {
+  --color-primary: #3a5a78;
+}
+
+h2 {
+  color: var(--color-primary);
+}
+
+ngb-pagination ::ng-deep .page-item.active .page-link {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+ngb-pagination ::ng-deep .page-item .page-link {
+  color: var(--color-primary);
+  outline: none;
+}
+
+ngb-pagination ::ng-deep .page-link:focus {
+  box-shadow: 0 0 0 0.2rem rgba(58,90,120,.25);
+}

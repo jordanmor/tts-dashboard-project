@@ -1,0 +1,19 @@
+.navbar {
+  background-color: rgba(228,239,246,.45); 
+}
+
+.navbar a {
+  color: #3a5a78;
+  font-weight: 600;
+}
+
+.navbar .navbar-brand {
+  font-weight: bold;
+  border-bottom: 3px solid #f7941f;
+  margin: 0 .5rem 0 0;
+  padding: 0;
+}
+
+.navbar .navbar-brand span {
+  color:#f7941f;
+}
