@@ -4,8 +4,10 @@ export class PaginatedRequest {
   pageSize: number;
   sortDirection: string;
   sortBy: string;
-  orderByDiscount?: boolean;
-  data?: object;
+  sortByDiscount?: boolean;
+  filtered?: boolean;
+  filterBy?: string;
+  filterAlsoBy?: string;
 
   constructor(
     datasetName: string,
@@ -13,15 +15,19 @@ export class PaginatedRequest {
     pageSize: number,
     sortDirection: string,
     sortBy: string,
-    orderByDiscount?: boolean,
-    data?: object
+    sortByDiscount?: boolean,
+    filtered?: boolean,
+    filterBy?: string,
+    filterAlsoBy?: string,
     ) {
       this.datasetName = datasetName;
       this.page = page - 1;
       this.pageSize = pageSize;
       this.sortDirection = sortDirection;
       this.sortBy = sortBy;
-      this.orderByDiscount = orderByDiscount;
-      this.data = data;
+      this.sortByDiscount = sortByDiscount;
+      this.filtered = filtered;
+      this.filterBy = filterBy;
+      this.filterAlsoBy = filterAlsoBy;
   }
 }

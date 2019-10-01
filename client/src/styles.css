@@ -19,19 +19,27 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+/* ----- BUTTON STYLES ----- */
+
 .btn {
   border-color: var(--color-primary-faded);
-}
-
-.btn-secondary {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-
 }
 
 .btn-danger {
   background-color: var(--color-tertiary);
   border-color: var(--color-tertiary);
+}
+
+.btn-secondary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-secondary:hover,
+.show>.btn-secondary.dropdown-toggle {
+  color: #fff;
+  background-color: #5d7790;
+  border-color: #5d7790;
 }
 
 .btn-outline-secondary {
@@ -53,6 +61,39 @@ body {
 }
 
 .btn-outline-secondary:focus,
-.show>.btn-outline-secondary.dropdown-toggle:focus {
+.show>.btn-outline-secondary.dropdown-toggle:focus,
+.show>.btn-secondary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem var(--color-primary-shadow);
+}
+
+/* ----- CHECKBOX STYLES ----- */
+
+.checkbox-label,
+.checkbox-label span {
+  height: 18px;
+}
+
+/* Hide the default checkbox */
+.checkbox-label input {
+  display: none;
+}
+
+/* Style the artificial checkbox */
+.checkbox-label span {
+  display: inline-block;
+  position: relative;
+  width: 18px;
+  border: 1px solid grey;
+  border-radius: 2px;
+  top: 3px;
+  cursor: pointer;
+}
+
+/* Style its checked state...with a ticked icon */
+.checkbox-label [type=checkbox]:checked + span:before {
+  content: '\2714';
+  position: absolute;
+  font-size: 1.4rem;
+  top: -11px;
+  left: 1px;
 }

@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PaginatedResponse } from '../models/paginatedResponse';
 import { PaginatedRequest } from '../models/paginatedRequest';
@@ -17,12 +17,20 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   getPaginatedData(paginatedRequest: PaginatedRequest): Observable<PaginatedResponse> {
-    const { datasetName, page, pageSize, sortDirection, sortBy, orderByDiscount } = paginatedRequest;
+    const { datasetName, page, pageSize, sortDirection, sortBy, sortByDiscount, filtered } = paginatedRequest;
 
     if(datasetName === 'products') {
+      if(filtered) {
+        const { filterBy, filterAlsoBy } = paginatedRequest;
+        // Filtered product request
+        return this.http.get<PaginatedResponse>(
+          `${this.host}/${datasetName}?page=${page}&pageSize=${pageSize}&direction=${sortDirection}&sortBy=${sortBy}&sortByDiscount=${sortByDiscount}&filtered=true&filterBy=${filterBy}&filterAlsoBy=${filterAlsoBy}`);
+      }
+      // Non-filtered product request
       return this.http.get<PaginatedResponse>(
-        `${this.host}/${datasetName}?page=${page}&pageSize=${pageSize}&direction=${sortDirection}&sortBy=${sortBy}&orderByDiscount=${orderByDiscount}`);
+        `${this.host}/${datasetName}?page=${page}&pageSize=${pageSize}&direction=${sortDirection}&sortBy=${sortBy}&sortByDiscount=${sortByDiscount}`);
     } else {
+      // Category or supplier request
       return this.http.get<PaginatedResponse>(`${this.host}/${datasetName}?page=${page}&pageSize=${pageSize}&direction=${sortDirection}&sortBy=${sortBy}`);
     }
   }

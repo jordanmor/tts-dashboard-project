@@ -2,8 +2,11 @@
 <app-main-page-header
   [datasetTitle]="datasetTitle"
   [datasetName]="datasetName"
-  (onModalFormSubmit)="handleModalFormSubmit()"
   [totalDataItems]="data.totalElements"
+  [categories]="categories"
+  (onModalFormSubmit)="handleModalFormSubmit()"
+  [suppliers]="suppliers"
+  (onFilteredRequest)="handleFilteredRequest($event)"
 ></app-main-page-header>
 
 <!-- Table -->

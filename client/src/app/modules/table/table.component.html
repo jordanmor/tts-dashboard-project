@@ -82,7 +82,7 @@
                             </td>
 
                             <td formGroupName="supplier">
-                                <select formControlName="id" type="text" class="form-control" [attr.id]="'supplierId_' + dataItem.supplier.id">>
+                                <select formControlName="id" type="text" class="form-control" [attr.id]="'supplierId_' + dataItem.supplier.id">
                                     <option *ngFor="let supplier of suppliers" [selected]="supplier.id === dataItem.supplier.id" [attr.value]="supplier.id">{{ supplier.name }}</option>
                                 </select>
                             </td>
