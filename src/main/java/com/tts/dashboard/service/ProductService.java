@@ -37,7 +37,7 @@ public class ProductService {
     }
 
     public Page<Product> findProductsFilteredAndPaginated(int page, int pageSize, String direction, String sortBy, boolean sortByDiscount, String filterBy, String filterAlsoBy) {
-         Map<String, String> filteredValues = getFilterValues(filterBy, filterAlsoBy);
+        Map<String, String> filteredValues = getFilterValues(filterBy, filterAlsoBy);
         Pageable paginatedPages = PageRequest.of(page, pageSize, Sort.Direction.fromString(direction), sortBy);
         Pageable paginatedPagesForDiscountSort = PageRequest.of(page, pageSize);
 
@@ -177,7 +177,7 @@ public class ProductService {
     private Page<Product> paginateList(List<Product> filteredProducts, Pageable paginatedPages, String direction) {
         List<Product> filteredProductsSorted;
         MathContext mc = new MathContext(2);
-        if(direction.equals("ASC")) {
+        if(direction.equals("DESC")) {
             filteredProductsSorted = filteredProducts
                     .stream()
                     .sorted(Comparator.comparing((Product list ) ->
@@ -195,7 +195,7 @@ public class ProductService {
         return paginatedList;
     }
 
-    private Map<String, String> mapFilterValues(String filterBy, String filterAlsoBy) {
+    private Map<String, String> getFilterValues(String filterBy, String filterAlsoBy) {
         Map<String, String> filteredStringValues = new HashMap<>();
         String[] filterByValues = filterBy.split(" ");
         String[] filterAlsoByValues= filterAlsoBy.split(" ");
@@ -208,46 +208,17 @@ public class ProductService {
             filteredStringValues.put("filterAlsoByValue", null);
         }
 
-        return filteredStringValues;
-    }
-
-    private Map<String, String> getFilterValues(String filterBy, String filterAlsoBy) {
-        Map<String, String> filteredValues = mapFilterValues(filterBy, filterAlsoBy);
-        Map<String, String> newFilteredvalues = new HashMap<>();
-        filterBy = filteredValues.get("filterBy");
-        filterAlsoBy = filteredValues.get("filterAlsoBy");
-        if(filterBy.equals("category") || filterAlsoBy.equals("category")) {
-            if(filterAlsoBy.equals("none")) {
-                // Category only
-                return filteredValues;
-            } else if(filterBy.equals("category") && filterAlsoBy.equals("availability")){
-                // Category and Availability
-                return filteredValues;
-            } else if(filterBy.equals("availability") && filterAlsoBy.equals("category")) {
-                newFilteredvalues.put("filterBy", filteredValues.get("filterAlsoBy"));
-                newFilteredvalues.put("filterByValue", filteredValues.get("filterAlsoByValue"));
-                newFilteredvalues.put("filterAlsoBy", filteredValues.get("filterBy"));
-                newFilteredvalues.put("filterAlsoByValue", filteredValues.get("filterByValue"));
-                // Category and Availability
-                return newFilteredvalues;
-            }
-        } else if(filterBy.equals("supplier") || filterAlsoBy.equals("supplier")) {
-            if(filterAlsoBy.equals("none")) {
-                // Supplier only
-                return filteredValues;
-            } else if(filterBy.equals("supplier") && filterAlsoBy.equals("availability")) {
-                // Supplier and Availability
-                return filteredValues;
-            } else if (filterBy.equals("availability") && filterAlsoBy.equals("supplier")) {
-                newFilteredvalues.put("filterBy", filteredValues.get("filterAlsoBy"));
-                newFilteredvalues.put("filterByValue", filteredValues.get("filterAlsoByValue"));
-                newFilteredvalues.put("filterAlsoBy", filteredValues.get("filterBy"));
-                newFilteredvalues.put("filterAlsoByValue", filteredValues.get("filterByValue"));
-                // Supplier and Availability
-                return newFilteredvalues;
-            }
+        // If filter query contains information on category/supplier and availability,
+        // make filterBy always = category/supplier and filterAlsoBy always = availability
+        // This simplifies the logic needed to grab data from db with provided query parameters
+        if(filteredStringValues.get("filterBy").equals("availability") && !filteredStringValues.get("filterAlsoBy").equals("none")) {
+            Map<String, String> newFilteredValues = new HashMap<>();
+            newFilteredValues.put("filterBy", filteredStringValues.get("filterAlsoBy"));
+            newFilteredValues.put("filterByValue", filteredStringValues.get("filterAlsoByValue"));
+            newFilteredValues.put("filterAlsoBy", filteredStringValues.get("filterBy"));
+            newFilteredValues.put("filterAlsoByValue", filteredStringValues.get("filterByValue"));
+            return newFilteredValues;
         }
-        // Availability only
-        return filteredValues;
+        return filteredStringValues;
     }
 }

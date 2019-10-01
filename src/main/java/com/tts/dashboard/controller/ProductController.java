@@ -29,6 +29,8 @@ public class ProductController {
             @RequestParam(required=false) String filterAlsoBy
             ) {
         if(filtered) {
+            System.out.println(filterBy);
+            System.out.println(filterAlsoBy);
             return productService.findProductsFilteredAndPaginated(page, pageSize, direction, sortBy, sortByDiscount, filterBy, filterAlsoBy);
         }
         return productService.findProductsPaginated(page, pageSize, direction, sortBy, sortByDiscount);
