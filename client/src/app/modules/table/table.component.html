@@ -13,13 +13,13 @@
                 <th>Full Price <i (click)="sortDataBy('fullPrice')" class="fas fa-sort"></i></th>
                 <th>Sale Price <i (click)="sortDataBy('salePrice')" class="fas fa-sort"></i></th>
                 <th>Discount <i (click)="sortDataBy('discount')" class="fas fa-sort"></i></th>
-                <th [ngClass]="data.filterName1 === 'category' || data.filterName2 === 'category' ? 'filtered-column' : null">Category
-                    <i *ngIf="data.filterName1 !== 'category' && data.filterName2 !== 'category'" (click)="sortDataBy('category.name')" class="fas fa-sort"></i>
+                <th [ngClass]="filterData.filterName1 === 'category' || filterData.filterName2 === 'category' ? 'filtered-column' : null">Category
+                    <i *ngIf="filterData.filterName1 !== 'category' && filterData.filterName2 !== 'category'" (click)="sortDataBy('category.name')" class="fas fa-sort"></i>
                 </th>
-                <th [ngClass]="data.filterName1 === 'supplier' || data.filterName2 === 'supplier' ? 'filtered-column' : null">Supplier 
-                    <i *ngIf="data.filterName1 !== 'supplier' && data.filterName2 !== 'supplier'" (click)="sortDataBy('supplier.name')" class="fas fa-sort"></i>
+                <th [ngClass]="filterData.filterName1 === 'supplier' || filterData.filterName2 === 'supplier' ? 'filtered-column' : null">Supplier 
+                    <i *ngIf="filterData.filterName1 !== 'supplier' && filterData.filterName2 !== 'supplier'" (click)="sortDataBy('supplier.name')" class="fas fa-sort"></i>
                 </th>
-                <th [ngClass]="data.filterName1 === 'availability' || data.filterName2 === 'availability' ? 'filtered-column' : null">Availability</th>
+                <th [ngClass]="filterData.filterName1 === 'availability' || filterData.filterName2 === 'availability' ? 'filtered-column' : null">Availability</th>
             </ng-container>
             
             <th></th>

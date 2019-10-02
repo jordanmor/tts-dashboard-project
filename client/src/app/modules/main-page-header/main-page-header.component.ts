@@ -34,7 +34,7 @@ export class MainPageHeaderComponent implements OnInit {
     this.onModalFormSubmit.emit();
   }
 
-  filteredRequest(filterData: any) {
+  filteredRequest(filterData: FilterData) {
     this.onFilteredRequest.emit(filterData);
   }
 }

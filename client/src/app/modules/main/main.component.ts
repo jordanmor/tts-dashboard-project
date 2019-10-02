@@ -19,10 +19,7 @@ export class MainComponent implements OnInit {
 
   @Input() datasetName: string;
   @Input() datasetTitle: object;
-
   data: Data = new Data();
-  categories: Category[];
-  suppliers: Supplier[];
 
   constructor(
     private dataService: DataService, 
@@ -30,17 +27,16 @@ export class MainComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.data.datasetName = this.datasetName;
     this.showData(this.createPaginatedRequest(this.data));
-    this.dataService.getAllCategories().subscribe(categories => this.categories = categories);
+    this.dataService.getAllCategories().subscribe(categories => this.data.categories = categories);
     this.dataService.getAllSuppliers().subscribe(suppliers => {
-      this.suppliers = suppliers;
+      this.data.suppliers = suppliers;
     });
   }
 
   // Handle pagination
   handlePageChange(page: number) {
-    this.data.currentPage = page;
+    this.data.paginatedData.currentPage = page;
     this.showData(this.createPaginatedRequest(this.data));
   }
 
@@ -57,53 +53,54 @@ export class MainComponent implements OnInit {
   }
 
   handleSortDataBy(sortBy: string) {
-    this.data.isSortDirectionAsc = !this.data.isSortDirectionAsc;
-    this.data.sortBy = sortBy;
-    this.data.sortByDiscount = sortBy === 'discount' ? true : false;
-    this.data.currentPage = 1;
+    this.data.paginatedData.isSortDirectionAsc = !this.data.paginatedData.isSortDirectionAsc;
+    this.data.paginatedData.sortBy = sortBy;
+    this.data.paginatedData.sortByDiscount = sortBy === 'discount' ? true : false;
+    this.data.paginatedData.currentPage = 1;
     this.showData(this.createPaginatedRequest(this.data));
   }
 
   showData(paginatedRequest: PaginatedRequest) {
     this.dataService.getPaginatedData(paginatedRequest).subscribe(response => {
-      this.data.dataset = response.content;
-      this.data.currentPage = response.number + 1;  // page numbers from server start at 0 
-      this.data.totalElements = response.totalElements;
-      this.data.pageSize = response.size;
+      this.data.paginatedData.dataset = response.content;
+      this.data.paginatedData.currentPage = response.number + 1;  // page numbers from server start at 0 
+      this.data.paginatedData.totalElements = response.totalElements;
+      this.data.paginatedData.pageSize = response.size;
     });
   }
 
   handleFilteredRequest(filterData: FilterData) {
     if(!filterData.filtered) {
       // Reset sort and current page
-      this.data.isSortDirectionAsc = true;
-      this.data.sortBy = 'id';
-      this.data.currentPage = 1;
+      this.data.paginatedData.isSortDirectionAsc = true;
+      this.data.paginatedData.sortBy = 'id';
+      this.data.paginatedData.currentPage = 1;
     }
-    this.data.filtered = filterData.filtered;
-    this.data.filterBy = filterData.filterBy;
-    this.data.filterAlsoBy = filterData.filterAlsoBy;
-    this.data.filterName1 = filterData.filterName1;
-    this.data.filterName2 = filterData.filterName2;
+    this.data.filterData.filtered = filterData.filtered;
+    this.data.filterData.filterBy = filterData.filterBy;
+    this.data.filterData.filterAlsoBy = filterData.filterAlsoBy;
+    this.data.filterData.filterName1 = filterData.filterName1;
+    this.data.filterData.filterName2 = filterData.filterName2;
     this.showData(this.createPaginatedRequest(this.data));
   }
 
   createPaginatedRequest(data: Data): PaginatedRequest {
-    const { datasetName, currentPage, pageSize, isSortDirectionAsc, sortBy, sortByDiscount, filtered } = data;
+    const { filtered } = data.filterData
+    const { currentPage, pageSize, isSortDirectionAsc, sortBy, sortByDiscount } = data.paginatedData;
     let sortDirection = isSortDirectionAsc ? 'ASC' : 'DESC';
     if(filtered) {
-      const { filterBy, filterAlsoBy } = data;
-      return new PaginatedRequest(datasetName, currentPage, pageSize, sortDirection, sortBy, sortByDiscount, filtered, filterBy, filterAlsoBy);
+      const { filterBy, filterAlsoBy } = data.filterData;
+      return new PaginatedRequest(this.datasetName, currentPage, pageSize, sortDirection, sortBy, sortByDiscount, filtered, filterBy, filterAlsoBy);
     }
-    return new PaginatedRequest(datasetName, currentPage, pageSize, sortDirection, sortBy, sortByDiscount);
+    return new PaginatedRequest(this.datasetName, currentPage, pageSize, sortDirection, sortBy, sortByDiscount);
   }
 
   handleModalFormSubmit() {
     let modalRef: any;
     if(this.datasetName === 'products') {
       modalRef = this.modalService.open(ModalProductFormComponent);
-      modalRef.componentInstance.categories = this.categories;
-      modalRef.componentInstance.suppliers = this.suppliers;
+      modalRef.componentInstance.categories = this.data.categories;
+      modalRef.componentInstance.suppliers = this.data.suppliers;
       modalRef.componentInstance.id = 1;
     } else if(this.datasetName === 'categories') {
       modalRef = this.modalService.open(ModalCategoryFormComponent);
@@ -122,8 +119,8 @@ export class MainComponent implements OnInit {
   }
 
   choosePageSize(pageSize: number) {
-    this.data.pageSize = pageSize;
-    this.data.currentPage = 1;
+    this.data.paginatedData.pageSize = pageSize;
+    this.data.paginatedData.currentPage = 1;
     this.showData(this.createPaginatedRequest(this.data));
   }
 }

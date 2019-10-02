@@ -3,7 +3,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Category } from '../../core/models/category';
 import { Supplier } from '../../core/models/supplier';
 import { Product } from '../../core/models/product';
-import { Data } from '../../../../temp/data copy';
+import { PaginatedData } from '../../core/models/paginatedData';
+import { FilterData } from '../../core/models/filterData';
 
 @Component({
   selector: 'app-table',
@@ -13,7 +14,8 @@ import { Data } from '../../../../temp/data copy';
 export class TableComponent implements OnInit {
 
   @Input() datasetName: string;
-  @Input() data: Data;
+  @Input() data: PaginatedData;
+  @Input() filterData: FilterData;
   @Input() categories: Category[];
   @Input() suppliers: Supplier[];
   @Output() onUpdateDataItem = new EventEmitter();
@@ -88,15 +90,17 @@ export class TableComponent implements OnInit {
   }
 
   getUpdatedProduct(dataItem: Product): Product {
+      const category = new Category();
+      const supplier = new Supplier();
       const id = dataItem.id;
       const name = this.updateProductForm.get('name').value === '' ? dataItem.name : this.updateProductForm.get('name').value;
       const fullPrice = this.updateProductForm.get('fullPrice').value === '' ? dataItem.fullPrice : this.updateProductForm.get('fullPrice').value;
       const salePrice = this.updateProductForm.get('salePrice').value === '' ? dataItem.salePrice : this.updateProductForm.get('salePrice').value;
-      const categoryId = this.updateProductForm.get('category.id').value === '' ? dataItem.category.id : parseInt(this.updateProductForm.get('category.id').value);
-      const supplierId = this.updateProductForm.get('supplier.id').value === '' ? dataItem.supplier.id : parseInt(this.updateProductForm.get('supplier.id').value);
+      category.setId(this.updateProductForm.get('category.id').value === '' ? dataItem.category.id : parseInt(this.updateProductForm.get('category.id').value));
+      supplier.setId(this.updateProductForm.get('supplier.id').value === '' ? dataItem.supplier.id : parseInt(this.updateProductForm.get('supplier.id').value));
       const availability = this.updateProductForm.get('availability').value === '' ? dataItem.availability : this.updateProductForm.get('availability').value;
 
-      return new Product(id, name,fullPrice,salePrice,categoryId,supplierId,availability);
+      return new Product(id, name,fullPrice,salePrice,category,supplier,availability);
   }
 
   removeItem(data: any) {

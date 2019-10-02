@@ -11,9 +11,9 @@ import { FilterData } from 'src/app/core/models/filterData';
 })
 export class FilterComponent implements OnInit {
 
+  @Input() datasetName: string;
   @Input() categories: Category[];
   @Input() suppliers: Supplier[];
-  @Input() datasetName: string;
   @Output() onFilteredRequest = new EventEmitter();
   filterOn: boolean = false;
   filterBy: string;

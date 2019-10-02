@@ -2,19 +2,20 @@
 <app-main-page-header
   [datasetTitle]="datasetTitle"
   [datasetName]="datasetName"
-  [totalDataItems]="data.totalElements"
-  [categories]="categories"
+  [totalDataItems]="data.paginatedData.totalElements"
+  [categories]="data.categories"
   (onModalFormSubmit)="handleModalFormSubmit()"
-  [suppliers]="suppliers"
+  [suppliers]="data.suppliers"
   (onFilteredRequest)="handleFilteredRequest($event)"
 ></app-main-page-header>
 
 <!-- Table -->
 <app-table
   [datasetName]="datasetName"
-  [data]="data"
-  [categories]="categories"
-  [suppliers]="suppliers"
+  [data]="data.paginatedData"
+  [filterData]="data.filterData"
+  [categories]="data.categories"
+  [suppliers]="data.suppliers"
   (onUpdateDataItem)="handleUpdateDataItem($event)"
   (onRemoveItem)="handleRemoveItem($event)"
   (onSortDataBy)="handleSortDataBy($event)"
@@ -23,10 +24,10 @@
 
 <div class="pagination-container">
   <!-- Pagination -->
-  <ngb-pagination *ngIf="data.dataset && data.totalElements > data.pageSize"
-      [collectionSize]="data.totalElements" 
-      [pageSize]="data.pageSize"
-      [(page)]="data.currentPage" 
+  <ngb-pagination *ngIf="data.paginatedData.dataset && data.paginatedData.totalElements > data.paginatedData.pageSize"
+      [collectionSize]="data.paginatedData.totalElements" 
+      [pageSize]="data.paginatedData.pageSize"
+      [(page)]="data.paginatedData.currentPage" 
       [maxSize]="5" 
       [rotate]="true" 
       [boundaryLinks]="true"
@@ -36,7 +37,7 @@
 
   <!-- Page Size Filter -->
   <div ngbDropdown placement="top-right" class="d-inline-block page-size">
-    <button class="btn btn-outline-secondary" id="pageSizeDropDown" ngbDropdownToggle>Page Size ({{data.pageSize}}) </button>
+    <button class="btn btn-outline-secondary" id="pageSizeDropDown" ngbDropdownToggle>Page Size ({{data.paginatedData.pageSize}}) </button>
     <div ngbDropdownMenu aria-labelledby="pageSizeDropDown">
       <button (click)="choosePageSize(100)" ngbDropdownItem>100</button>
       <button (click)="choosePageSize(50)" ngbDropdownItem>50</button>
