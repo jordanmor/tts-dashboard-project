@@ -1,0 +1,24 @@
+.filter {
+  margin-left: 1rem;
+}
+
+.filter .dropdown-menu {
+  min-width: 15rem;
+}
+
+.filter label {
+  color: var(--color-primary);
+}
+
+.filter .checkbox-label {
+  margin: 0;
+}
+
+.filter .checkbox-label span {
+  margin-left: .5rem;
+}
+
+.filter-btn {
+  width: 100%;
+  margin-bottom: .5rem;
+}

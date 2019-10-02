@@ -1,13 +1,99 @@
 /* You can add global styles to this file, and also import other style files */
-.table-container {
-  margin-top: 15px;
+:host {
+  --color-primary: #3a5a78;
+  --color-primary-faded: rgba(58,90,120, 0.6);
+  --color-secondary: #216bab;
+  --color-tertiary: #f7941f;
+  --color-primary-bg: #e4eff6;
+  --color-primary-shadow: rgba(228,239,246,.25);
 }
 
-th {
-  white-space: nowrap;
+h2 {
+  color: var(--color-primary);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  margin: 0;
 }
 
-table td {
-  vertical-align: middle;
-  padding: .35rem .75rem;
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* ----- BUTTON STYLES ----- */
+
+.btn {
+  border-color: var(--color-primary-faded);
+}
+
+.btn-danger {
+  background-color: var(--color-tertiary);
+  border-color: var(--color-tertiary);
+}
+
+.btn-secondary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-secondary:hover,
+.show>.btn-secondary.dropdown-toggle {
+  color: #fff;
+  background-color: #5d7790;
+  border-color: #5d7790;
+}
+
+.btn-outline-secondary {
+  font-weight: bold;
+  border-color: rgba(58,90,120, 0.9);
+  color: rgba(58,90,120, 0.9);
+}
+
+.btn-outline-secondary:hover {
+  color: #fff;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary-faded);
+}
+
+.show>.btn-outline-secondary.dropdown-toggle {
+  color: #fff;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary-faded);
+}
+
+.btn-outline-secondary:focus,
+.show>.btn-outline-secondary.dropdown-toggle:focus,
+.show>.btn-secondary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem var(--color-primary-shadow);
+}
+
+/* ----- CHECKBOX STYLES ----- */
+
+.checkbox-label,
+.checkbox-label span {
+  height: 18px;
+}
+
+/* Hide the default checkbox */
+.checkbox-label input {
+  display: none;
+}
+
+/* Style the artificial checkbox */
+.checkbox-label span {
+  display: inline-block;
+  position: relative;
+  width: 18px;
+  border: 1px solid grey;
+  border-radius: 2px;
+  top: 3px;
+  cursor: pointer;
+}
+
+/* Style its checked state...with a ticked icon */
+.checkbox-label [type=checkbox]:checked + span:before {
+  content: '\2714';
+  position: absolute;
+  font-size: 1.4rem;
+  top: -11px;
+  left: 1px;
 }

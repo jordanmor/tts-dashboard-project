@@ -1,5 +1,26 @@
+:host {
+  --color-primary: #3a5a78;
+}
+
 .page-header {
   margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.page-header .title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.page-header .title span {
+  position: relative;
+  top: .1rem;
+  display: inline-block;
+  font-size: 1rem;
+  margin-left: .5rem;
+  color: var(--color-primary);
 }
 
 .alert {

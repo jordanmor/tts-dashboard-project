@@ -8,8 +8,12 @@ export class Data {
   pageSize: number;
   isSortDirectionAsc: boolean;
   sortBy: string;
-  orderByDiscount?: boolean;
-  paginatedRequest?: PaginatedRequest;
+  sortByDiscount: boolean;
+  filtered: boolean;
+  filterBy: string;
+  filterAlsoBy: string;
+  filterName1: string;
+  filterName2: string;
 
   constructor(params: Data = {} as Data) {
     let {
@@ -20,7 +24,12 @@ export class Data {
       pageSize = 10,
       isSortDirectionAsc = true,
       sortBy = 'id',
-      orderByDiscount = false
+      sortByDiscount = false,
+      filtered = false,
+      filterBy = '',
+      filterAlsoBy = 'none',
+      filterName1 = '',
+      filterName2 = ''
     } = params;
 
     this.datasetName = datasetName;
@@ -30,15 +39,11 @@ export class Data {
     this.pageSize = pageSize;
     this.isSortDirectionAsc = isSortDirectionAsc;
     this.sortBy = sortBy;
-    this.orderByDiscount = orderByDiscount;
-    this.paginatedRequest = new PaginatedRequest(
-      this.datasetName,
-      this.currentPage - 1,
-      this.pageSize,
-      this.isSortDirectionAsc ? 'ASC' : 'DESC',
-      this.sortBy,
-      this.orderByDiscount,
-      null
-    )
+    this.sortByDiscount = sortByDiscount;
+    this.filtered = filtered;
+    this.filterBy = filterBy;
+    this.filterAlsoBy = filterAlsoBy;
+    this.filterName1 = filterName1;
+    this.filterName2 = filterName2;
   }
 }

@@ -11,6 +11,7 @@ import { MainPageHeaderComponent } from './modules/main-page-header/main-page-he
 import { ProductsComponent } from './modules/products/products.component';
 import { CategoriesComponent } from './modules/categories/categories.component';
 import { SuppliersComponent } from './modules/suppliers/suppliers.component';
+import { FilterComponent } from './modules/filter/filter.component';
 import { ModalCategoryFormComponent } from './modules/categories/modal-category-form/modal-category-form.component';
 import { ModalSupplierFormComponent } from './modules/suppliers/modal-supplier-form/modal-supplier-form.component';
 import { MainComponent } from './modules/main/main.component';
@@ -31,10 +32,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ModalCategoryFormComponent,
     ModalSupplierFormComponent,
     MainComponent,
-    TableComponent
+    TableComponent,
+    FilterComponent
   ],
   imports: [
-BrowserModule,
+    BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     NgbModule,

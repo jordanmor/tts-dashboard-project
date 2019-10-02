@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Category } from '../../core/models/category';
 import { Supplier } from '../../core/models/supplier';
 import { Product } from '../../core/models/product';
+import { Data } from '../../../../temp/data copy';
 
 @Component({
   selector: 'app-table',
@@ -12,8 +13,7 @@ import { Product } from '../../core/models/product';
 export class TableComponent implements OnInit {
 
   @Input() datasetName: string;
-  @Input() currentPage: number;
-  @Input() dataset: any[];
+  @Input() data: Data;
   @Input() categories: Category[];
   @Input() suppliers: Supplier[];
   @Output() onUpdateDataItem = new EventEmitter();

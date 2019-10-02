@@ -13,17 +13,21 @@
                 <th>Full Price <i (click)="sortDataBy('fullPrice')" class="fas fa-sort"></i></th>
                 <th>Sale Price <i (click)="sortDataBy('salePrice')" class="fas fa-sort"></i></th>
                 <th>Discount <i (click)="sortDataBy('discount')" class="fas fa-sort"></i></th>
-                <th>Category <i (click)="sortDataBy('category.name')" class="fas fa-sort"></i></th>
-                <th>Supplier <i (click)="sortDataBy('supplier.name')" class="fas fa-sort"></i></th>
-                <th>Availability</th>
+                <th [ngClass]="data.filterName1 === 'category' || data.filterName2 === 'category' ? 'filtered-column' : null">Category
+                    <i *ngIf="data.filterName1 !== 'category' && data.filterName2 !== 'category'" (click)="sortDataBy('category.name')" class="fas fa-sort"></i>
+                </th>
+                <th [ngClass]="data.filterName1 === 'supplier' || data.filterName2 === 'supplier' ? 'filtered-column' : null">Supplier 
+                    <i *ngIf="data.filterName1 !== 'supplier' && data.filterName2 !== 'supplier'" (click)="sortDataBy('supplier.name')" class="fas fa-sort"></i>
+                </th>
+                <th [ngClass]="data.filterName1 === 'availability' || data.filterName2 === 'availability' ? 'filtered-column' : null">Availability</th>
             </ng-container>
             
             <th></th>
           </tr>
         </thead>
 
-        <tbody *ngIf="dataset">
-            <ng-container *ngFor="let dataItem of dataset">
+        <tbody *ngIf="data.dataset">
+            <ng-container *ngFor="let dataItem of data.dataset">
 
                 <!-- Display Data Item -->
                 <ng-container *ngIf="dataItem.id !== selectedId; else showForm">
@@ -82,7 +86,7 @@
                             </td>
 
                             <td formGroupName="supplier">
-                                <select formControlName="id" type="text" class="form-control" [attr.id]="'supplierId_' + dataItem.supplier.id">>
+                                <select formControlName="id" type="text" class="form-control" [attr.id]="'supplierId_' + dataItem.supplier.id">
                                     <option *ngFor="let supplier of suppliers" [selected]="supplier.id === dataItem.supplier.id" [attr.value]="supplier.id">{{ supplier.name }}</option>
                                 </select>
                             </td>

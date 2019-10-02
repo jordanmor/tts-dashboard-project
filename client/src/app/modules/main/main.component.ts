@@ -8,6 +8,7 @@ import { ModalCategoryFormComponent } from '../categories/modal-category-form/mo
 import { ModalSupplierFormComponent } from '../suppliers/modal-supplier-form/modal-supplier-form.component';
 import { Category } from 'src/app/core/models/category';
 import { Supplier } from 'src/app/core/models/supplier';
+import { FilterData } from '../../core/models/filterData';
 
 @Component({
   selector: 'app-main',
@@ -58,7 +59,8 @@ export class MainComponent implements OnInit {
   handleSortDataBy(sortBy: string) {
     this.data.isSortDirectionAsc = !this.data.isSortDirectionAsc;
     this.data.sortBy = sortBy;
-    this.data.orderByDiscount = sortBy === 'discount' ? true : false;
+    this.data.sortByDiscount = sortBy === 'discount' ? true : false;
+    this.data.currentPage = 1;
     this.showData(this.createPaginatedRequest(this.data));
   }
 
@@ -71,10 +73,29 @@ export class MainComponent implements OnInit {
     });
   }
 
+  handleFilteredRequest(filterData: FilterData) {
+    if(!filterData.filtered) {
+      // Reset sort and current page
+      this.data.isSortDirectionAsc = true;
+      this.data.sortBy = 'id';
+      this.data.currentPage = 1;
+    }
+    this.data.filtered = filterData.filtered;
+    this.data.filterBy = filterData.filterBy;
+    this.data.filterAlsoBy = filterData.filterAlsoBy;
+    this.data.filterName1 = filterData.filterName1;
+    this.data.filterName2 = filterData.filterName2;
+    this.showData(this.createPaginatedRequest(this.data));
+  }
+
   createPaginatedRequest(data: Data): PaginatedRequest {
-    const {datasetName, currentPage, pageSize, isSortDirectionAsc, sortBy, orderByDiscount} = data;
+    const { datasetName, currentPage, pageSize, isSortDirectionAsc, sortBy, sortByDiscount, filtered } = data;
     let sortDirection = isSortDirectionAsc ? 'ASC' : 'DESC';
-    return new PaginatedRequest(datasetName, currentPage, pageSize, sortDirection, sortBy, orderByDiscount);
+    if(filtered) {
+      const { filterBy, filterAlsoBy } = data;
+      return new PaginatedRequest(datasetName, currentPage, pageSize, sortDirection, sortBy, sortByDiscount, filtered, filterBy, filterAlsoBy);
+    }
+    return new PaginatedRequest(datasetName, currentPage, pageSize, sortDirection, sortBy, sortByDiscount);
   }
 
   handleModalFormSubmit() {
@@ -98,5 +119,11 @@ export class MainComponent implements OnInit {
     }).catch((error) => {
       // console.log(error);
     });
+  }
+
+  choosePageSize(pageSize: number) {
+    this.data.pageSize = pageSize;
+    this.data.currentPage = 1;
+    this.showData(this.createPaginatedRequest(this.data));
   }
 }

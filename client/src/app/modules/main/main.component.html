@@ -2,30 +2,47 @@
 <app-main-page-header
   [datasetTitle]="datasetTitle"
   [datasetName]="datasetName"
+  [totalDataItems]="data.totalElements"
+  [categories]="categories"
   (onModalFormSubmit)="handleModalFormSubmit()"
+  [suppliers]="suppliers"
+  (onFilteredRequest)="handleFilteredRequest($event)"
 ></app-main-page-header>
 
 <!-- Table -->
 <app-table
   [datasetName]="datasetName"
-  [dataset]="data.dataset"
+  [data]="data"
   [categories]="categories"
   [suppliers]="suppliers"
-  [currentPage]="data.currentPage"
   (onUpdateDataItem)="handleUpdateDataItem($event)"
   (onRemoveItem)="handleRemoveItem($event)"
   (onSortDataBy)="handleSortDataBy($event)"
 >
 </app-table>
 
-<!-- Pagination -->
-<ngb-pagination *ngIf="data.dataset && data.totalElements > data.pageSize"
-    [collectionSize]="data.totalElements" 
-    [pageSize]="data.pageSize"
-    [(page)]="data.currentPage" 
-    [maxSize]="5" 
-    [rotate]="true" 
-    [boundaryLinks]="true"
-    (pageChange)="handlePageChange($event)"
->
-</ngb-pagination>
+<div class="pagination-container">
+  <!-- Pagination -->
+  <ngb-pagination *ngIf="data.dataset && data.totalElements > data.pageSize"
+      [collectionSize]="data.totalElements" 
+      [pageSize]="data.pageSize"
+      [(page)]="data.currentPage" 
+      [maxSize]="5" 
+      [rotate]="true" 
+      [boundaryLinks]="true"
+      (pageChange)="handlePageChange($event)"
+  >
+  </ngb-pagination>
+
+  <!-- Page Size Filter -->
+  <div ngbDropdown placement="top-right" class="d-inline-block page-size">
+    <button class="btn btn-outline-secondary" id="pageSizeDropDown" ngbDropdownToggle>Page Size ({{data.pageSize}}) </button>
+    <div ngbDropdownMenu aria-labelledby="pageSizeDropDown">
+      <button (click)="choosePageSize(100)" ngbDropdownItem>100</button>
+      <button (click)="choosePageSize(50)" ngbDropdownItem>50</button>
+      <button (click)="choosePageSize(25)" ngbDropdownItem>25</button>
+      <button (click)="choosePageSize(10)" ngbDropdownItem>10</button>
+    </div>
+  </div>
+
+</div>

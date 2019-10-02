@@ -1,7 +1,20 @@
 <div class="page-header">
-    <h1>Dashboard</h1>
-    <h2>{{ datasetTitle.singular }}</h2>
-    <button type="button" (click)="openModal()" class="btn btn-primary add">Add {{ datasetTitle.plural }}</button>
+    <div class="title">
+        <h2>{{ datasetTitle.plural }}</h2>
+        <span>({{totalDataItems}})</span>
+    </div>
+    <div>
+        <!-- Add an Item -->
+        <button type="button" (click)="openModal()" class="btn btn-outline-secondary add">Add a {{ datasetTitle.singular }}</button>
+        <!-- Filter -->
+        <app-filter
+            [categories]="categories"
+            [suppliers]="suppliers"
+            [datasetName]="datasetName"
+            (onFilteredRequest)="filteredRequest($event)"
+        >
+        </app-filter>
+    </div>
 </div>
 
 <!-- Alerts -->
@@ -13,3 +26,4 @@
         </button>
     </div>
 </div>
+

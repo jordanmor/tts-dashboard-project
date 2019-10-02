@@ -1,0 +1,90 @@
+<div *ngIf="datasetName === 'products'" ngbDropdown class="d-inline-block filter">
+
+    <button [ngClass]="filterOn ? 'btn btn-secondary' : 'btn btn-outline-secondary'" id="dropdownForm1" ngbDropdownToggle>
+        Filter 
+        <span>{{filterOn ? "On" : "Off"}}</span>
+    </button>
+
+    <div ngbDropdownMenu aria-labelledby="dropdownFilterForm">
+
+        <form [formGroup]="filterForm" class="px-4 py-3" (ngSubmit)="onSubmitFilterForm()">
+
+            <!-- <button class="btn btn-outline-secondary filter-btn" (click)="toggleFilter()">
+                    Turn Filter {{filterOn ? "Off" : "On"}}
+            </button> -->
+
+            <div class="form-group">
+                <select (change)="setFilterBy($event)" formControlName="filterBy" type="text" class="form-control">
+                    <option [selected]="true" disabled hidden>Filter By</option>
+                    <option [value]="'category'">Category</option>
+                    <option [value]="'supplier'">Supplier</option>
+                    <option [value]="'availability'">Availability</option>
+                </select>
+
+                <div *ngIf="filterBy !== ''" class="form-group">
+
+                    <ng-container *ngIf="filterBy !== 'availability'; else showAvailability">
+                        <select (change)="setFilterByValue($event)" formControlName="filterByValue" type="text" class="form-control">
+                            <option [value]="''" selected disabled hidden>Select {{filterBy}}</option>
+                            <ng-container *ngIf="filterBy === 'category'">
+                                <option *ngFor="let category of categories" [attr.value]="category.id">{{ category.name }}</option>
+                            </ng-container>
+                            <ng-container *ngIf="filterBy === 'supplier'">
+                                <option *ngFor="let supplier of suppliers" [attr.value]="supplier.id">{{ supplier.name }}</option>
+                            </ng-container>
+                        </select>
+                    </ng-container>
+
+                    <ng-template #showAvailability>
+                        <div class="form-group checkbox-container">
+                            <label class="checkbox-label">Is Available
+                                <input type="checkbox" formControlName="filterByValue" [checked]=true>
+                                <span class=""></span>
+                            </label>
+                        </div>
+                    </ng-template>
+
+                    <div *ngIf="filterByValue !== ''" class="form-group">
+                        <select (change)="setSecondFilterBy($event)" type="text" formControlName="filterAlsoBy" class="form-control">
+                            <option [selected]="true" disabled hidden>Also Filter By</option>
+                            <option *ngIf="filterBy === 'availability'" [value]="'category'">Category</option>
+                            <option *ngIf="filterBy === 'availability'" [value]="'supplier'">Supplier</option>
+                            <option *ngIf="filterBy !== 'availability'" [value]="'availability'">Availability</option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="filterAlsoBy !== 'none'" class="form-group">
+
+                        <ng-container *ngIf="filterBy === 'availability'; else showAvailabilityTwo">
+                            <select (change)="setFilterByValue($event)" formControlName="filterAlsoByValue" type="text" class="form-control">
+                                <option [value]="''" selected disabled hidden>Select {{filterAlsoBy}}</option>
+                                <ng-container *ngIf="filterAlsoBy === 'category'">
+                                    <option *ngFor="let category of categories" [attr.value]="category.id">{{ category.name }}</option>
+                                </ng-container>
+                                <ng-container *ngIf="filterAlsoBy === 'supplier'">
+                                    <option *ngFor="let supplier of suppliers" [attr.value]="supplier.id">{{ supplier.name }}</option>
+                                </ng-container>
+                            </select>
+                        </ng-container>
+
+                        <ng-template #showAvailabilityTwo>
+                            <div class="form-group checkbox-container">
+                                <label class="checkbox-label">Is Available
+                                    <input type="checkbox" formControlName="filterAlsoByValue" [checked]=true>
+                                    <span class=""></span>
+                                </label>
+                            </div>
+                        </ng-template>
+
+                    </div>
+
+                </div>
+
+                <!-- <button *ngIf="filterBy !== '' && filterId !== 0" class="btn btn-outline-secondary">Submit</button> -->
+            </div>
+            <button class="btn btn-outline-secondary filter-btn">
+                Turn Filter {{filterOn ? "Off" : "On"}}
+            </button>
+        </form>
+    </div>
+</div> <!-- /Filter End -->
