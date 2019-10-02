@@ -5,6 +5,7 @@ import com.tts.dashboard.repository.CategoryRepository;
 import com.tts.dashboard.repository.ProductRepository;
 import com.tts.dashboard.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -191,8 +192,10 @@ public class ProductService {
                             .reversed())
                     .collect(Collectors.toList());
         }
-        Page<Product> paginatedList = new PageImpl(filteredProductsSorted, paginatedPages, filteredProductsSorted.size());
-        return paginatedList;
+        PagedListHolder<Product> page = new PagedListHolder<>(filteredProductsSorted);
+        page.setPageSize(paginatedPages.getPageSize());
+        page.setPage(paginatedPages.getPageNumber());
+        return new PageImpl<Product>(page.getPageList(), paginatedPages, filteredProductsSorted.size());
     }
 
     private Map<String, String> getFilterValues(String filterBy, String filterAlsoBy) {
