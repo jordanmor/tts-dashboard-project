@@ -11,6 +11,7 @@
             [categories]="categories"
             [suppliers]="suppliers"
             [datasetName]="datasetName"
+            (onFilteredRequest)="filteredRequest($event)"
         >
         </app-filter>
     </div>
