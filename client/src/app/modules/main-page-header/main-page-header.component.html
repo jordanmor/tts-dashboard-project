@@ -53,7 +53,7 @@
                                 </div>
                             </ng-template>
 
-                            <div *ngIf="filterBy === 'availability' || filterByValue !== ''" class="form-group">
+                            <div *ngIf="filterByValue !== ''" class="form-group">
                                 <select (change)="setSecondFilterBy($event)" type="text" formControlName="filterAlsoBy" class="form-control">
                                     <option [selected]="true" disabled hidden>Also Filter By</option>
                                     <option *ngIf="filterBy === 'availability'" [value]="'category'">Category</option>

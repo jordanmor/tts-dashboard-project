@@ -49,3 +49,8 @@ td.checkbox-container {
   vertical-align: middle;
   text-align: center;
 }
+
+.filtered-column {
+  background-color: var(--color-tertiary);
+  color: #fff;
+}

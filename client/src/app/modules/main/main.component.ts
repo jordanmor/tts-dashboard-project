@@ -83,6 +83,8 @@ export class MainComponent implements OnInit {
     this.data.filtered = filterData.filtered;
     this.data.filterBy = filterData.filterBy;
     this.data.filterAlsoBy = filterData.filterAlsoBy;
+    this.data.filterName1 = filterData.filterName1;
+    this.data.filterName2 = filterData.filterName2;
     this.showData(this.createPaginatedRequest(this.data));
   }
 

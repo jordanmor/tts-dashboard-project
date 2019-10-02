@@ -57,10 +57,6 @@ export class MainPageHeaderComponent implements OnInit {
 
   setFilterByValue($event: any) {
     this.filterByValue = $event.target.value;
-    // this.filterAlsoBy = 'none'
-    if(this.filterOn) {
-      console.log(this.filterForm.value);
-    }
   }
 
   setSecondFilterBy($event: any) {
@@ -89,12 +85,12 @@ export class MainPageHeaderComponent implements OnInit {
     filterData.filtered = this.filterOn;
     if(!this.filterOn) {
       this.reset();
-      filterData.filterBy = '';
-      filterData.filterAlsoBy = 'none';
     } else {
       this.setFilterData();
       filterData.filterBy = `${this.filterBy}+${this.filterByValue}`;
       filterData.filterAlsoBy = `${this.filterAlsoBy}+${this.filterAlsoByValue}`;
+      filterData.filterName1 = this.filterBy;
+      filterData.filterName2 = this.filterAlsoBy;
     }
     this.filteredRequest(filterData);
   }
@@ -102,12 +98,12 @@ export class MainPageHeaderComponent implements OnInit {
   setFilterData() {
     this.filterBy = this.filterForm.get('filterBy').value;
     this.filterByValue = this.filterForm.get('filterByValue').value;
+    this.filterAlsoByValue = this.filterForm.get('filterAlsoByValue').value;
+    this.filterAlsoBy = this.filterForm.get('filterAlsoBy').value;
     // Handles submission of filter with availability pre-checked
     if(this.filterBy === 'availability' && this.filterByValue === '') {
       this.filterByValue = true;
     }
-    this.filterAlsoBy = this.filterForm.get('filterAlsoBy').value;
-    this.filterAlsoByValue = this.filterForm.get('filterAlsoByValue').value;
     // Handles submission of filter with availability pre-checked
     if(this.filterAlsoBy === 'availability' && this.filterAlsoByValue === '') {
       this.filterAlsoByValue = true;

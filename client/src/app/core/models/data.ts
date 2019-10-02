@@ -12,6 +12,8 @@ export class Data {
   filtered: boolean;
   filterBy: string;
   filterAlsoBy: string;
+  filterName1: string;
+  filterName2: string;
 
   constructor(params: Data = {} as Data) {
     let {
@@ -25,7 +27,9 @@ export class Data {
       sortByDiscount = false,
       filtered = false,
       filterBy = '',
-      filterAlsoBy = 'none'
+      filterAlsoBy = 'none',
+      filterName1 = '',
+      filterName2 = ''
     } = params;
 
     this.datasetName = datasetName;
@@ -39,5 +43,7 @@ export class Data {
     this.filtered = filtered;
     this.filterBy = filterBy;
     this.filterAlsoBy = filterAlsoBy;
+    this.filterName1 = filterName1;
+    this.filterName2 = filterName2;
   }
 }
