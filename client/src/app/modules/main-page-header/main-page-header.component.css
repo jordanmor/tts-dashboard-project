@@ -23,31 +23,6 @@
   color: var(--color-primary);
 }
 
-.page-header .filter {
-  margin-left: 1rem;
-}
-
-.page-header .filter .dropdown-menu {
-  min-width: 15rem;
-}
-
-.page-header .filter label {
-  color: var(--color-primary);
-}
-
 .alert {
   margin-bottom: 0;
-}
-
-.filter .checkbox-label {
-  margin: 0;
-}
-
-.filter .checkbox-label span {
-  margin-left: .5rem;
-}
-
-.filter-btn {
-  width: 100%;
-  margin-bottom: .5rem;
 }
