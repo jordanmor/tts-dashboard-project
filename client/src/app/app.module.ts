@@ -18,6 +18,7 @@ import { MainComponent } from './modules/main/main.component';
 import { TableComponent } from './modules/table/table.component';
 import { DataService } from './core/services/data.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableHeaderComponent } from './modules/table/table-header/table-header.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ModalSupplierFormComponent,
     MainComponent,
     TableComponent,
-    FilterComponent
+    FilterComponent,
+    TableHeaderComponent
   ],
   imports: [
     BrowserModule,

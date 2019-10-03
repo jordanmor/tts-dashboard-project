@@ -30,11 +30,6 @@ label {
   border-left: 14px solid var(--color-tertiary);
 }
 
-th {
-  color: var(--color-primary);
-  white-space: nowrap;
-}
-
 table td {
   font-family: 'Roboto', sans-serif;
   vertical-align: middle;
@@ -48,13 +43,4 @@ table td {
 td.checkbox-container {
   vertical-align: middle;
   text-align: center;
-}
-
-.filtered-column {
-  background-color: var(--color-tertiary);
-  color: #fff;
-}
-
-.sorted {
-  background-color: #e4eff6;
 }

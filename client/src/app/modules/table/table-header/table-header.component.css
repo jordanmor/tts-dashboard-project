@@ -1,0 +1,19 @@
+:host(app-table-header) {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+th {
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+.filtered-column {
+  background-color: var(--color-tertiary);
+  color: #fff;
+}
+
+.sorted {
+  background-color: #e4eff6;
+}
