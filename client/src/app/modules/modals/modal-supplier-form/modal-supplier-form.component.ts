@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-modal-supplier-form',
@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class ModalSupplierFormComponent implements OnInit {
 
   @Input() id: number;
-  myForm: FormGroup;
+  addSupplierForm: FormGroup;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -23,12 +23,12 @@ export class ModalSupplierFormComponent implements OnInit {
   }
 
   createForm() {
-    this.myForm = this.formBuilder.group({
-      name: ''
+    this.addSupplierForm = this.formBuilder.group({
+      name: ['', [Validators.required]]
     });
   }
   submitForm() {
-    this.activeModal.close(this.myForm.value);
+    this.activeModal.close(this.addSupplierForm.value);
   }
 
 }

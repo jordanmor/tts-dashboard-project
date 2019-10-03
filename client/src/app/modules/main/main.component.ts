@@ -3,11 +3,9 @@ import { DataService } from 'src/app/core/services/data.service';
 import { Data } from 'src/app/core/models/data';
 import { PaginatedRequest } from '../../core/models/paginatedRequest';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalProductFormComponent } from '../../modules/products/modal-product-form/modal-product-form.component';
-import { ModalCategoryFormComponent } from '../categories/modal-category-form/modal-category-form.component';
-import { ModalSupplierFormComponent } from '../suppliers/modal-supplier-form/modal-supplier-form.component';
-import { Category } from 'src/app/core/models/category';
-import { Supplier } from 'src/app/core/models/supplier';
+import { ModalProductFormComponent } from '../modals/modal-product-form/modal-product-form.component';
+import { ModalCategoryFormComponent } from '../modals/modal-category-form/modal-category-form.component';
+import { ModalSupplierFormComponent } from '../modals/modal-supplier-form/modal-supplier-form.component';
 import { FilterData } from '../../core/models/filterData';
 
 @Component({
@@ -60,6 +58,7 @@ export class MainComponent implements OnInit {
     this.showData(this.createPaginatedRequest(this.data));
   }
 
+  // Populate paginated data
   showData(paginatedRequest: PaginatedRequest) {
     this.dataService.getPaginatedData(paginatedRequest).subscribe(response => {
       this.data.paginatedData.dataset = response.content;

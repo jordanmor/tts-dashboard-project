@@ -1,6 +1,7 @@
 package com.tts.dashboard.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="suppliers")
@@ -9,6 +10,7 @@ public class Supplier {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull
     private String name;
 
     public Supplier() {}
