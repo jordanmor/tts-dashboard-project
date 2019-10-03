@@ -32,23 +32,41 @@ export class MainComponent implements OnInit {
     });
   }
 
-  // Handle pagination
-  handlePageChange(page: number) {
-    this.data.paginatedData.currentPage = page;
-    this.showData(this.createPaginatedRequest(this.data));
+  // ---- GET AND DISPLAY DATA ---- //
+
+  // Populate paginated data
+  showData(paginatedRequest: PaginatedRequest) {
+    this.dataService.getPaginatedData(paginatedRequest).subscribe(response => {
+      this.data.paginatedData.dataset = response.content;
+      this.data.paginatedData.currentPage = response.number + 1;  // page numbers from server start at 0 
+      this.data.paginatedData.totalElements = response.totalElements;
+      this.data.paginatedData.numberOfElements = response.numberOfElements;
+      this.data.paginatedData.pageSize = response.size;
+    });
   }
+
+  // ---------- REMOVE ----------- //
 
   handleRemoveItem(id: number) {
     this.dataService.removeItem(id, this.datasetName).subscribe(res => {
+      // If current data item being removed is the only one on the paginated page,
+      // go to the previous page (request previous page)
+      if(this.data.paginatedData.numberOfElements === 1) {
+        this.data.paginatedData.currentPage -= 1;
+      }
       this.showData(this.createPaginatedRequest(this.data));
     });
   }
+
+   // ---------- UPDATE ----------- //
 
   handleUpdateDataItem(dataItem: any) {
     this.dataService.updateData(dataItem, this.datasetName).subscribe(res => {
       this.showData(this.createPaginatedRequest(this.data));
     });
   }
+
+  // ------------ SORT ------------- //
 
   handleSortDataBy(sortBy: string) {
     this.data.paginatedData.isSortDirectionAsc = !this.data.paginatedData.isSortDirectionAsc;
@@ -58,16 +76,9 @@ export class MainComponent implements OnInit {
     this.showData(this.createPaginatedRequest(this.data));
   }
 
-  // Populate paginated data
-  showData(paginatedRequest: PaginatedRequest) {
-    this.dataService.getPaginatedData(paginatedRequest).subscribe(response => {
-      this.data.paginatedData.dataset = response.content;
-      this.data.paginatedData.currentPage = response.number + 1;  // page numbers from server start at 0 
-      this.data.paginatedData.totalElements = response.totalElements;
-      this.data.paginatedData.pageSize = response.size;
-    });
-  }
+   // ---------- FILTERS ----------- //
 
+   // Table Filter
   handleFilteredRequest(filterData: FilterData) {
     if(!filterData.filtered) {
       // Reset sort and current page
@@ -83,16 +94,14 @@ export class MainComponent implements OnInit {
     this.showData(this.createPaginatedRequest(this.data));
   }
 
-  createPaginatedRequest(data: Data): PaginatedRequest {
-    const { filtered } = data.filterData
-    const { currentPage, pageSize, isSortDirectionAsc, sortBy, sortByDiscount } = data.paginatedData;
-    let sortDirection = isSortDirectionAsc ? 'ASC' : 'DESC';
-    if(filtered) {
-      const { filterBy, filterAlsoBy } = data.filterData;
-      return new PaginatedRequest(this.datasetName, currentPage, pageSize, sortDirection, sortBy, sortByDiscount, filtered, filterBy, filterAlsoBy);
-    }
-    return new PaginatedRequest(this.datasetName, currentPage, pageSize, sortDirection, sortBy, sortByDiscount);
+  // Page Size Filter
+  choosePageSize(pageSize: number) {
+    this.data.paginatedData.pageSize = pageSize;
+    this.data.paginatedData.currentPage = 1;
+    this.showData(this.createPaginatedRequest(this.data));
   }
+
+  // -------- MODAL FORMS --------- //
 
   handleModalFormSubmit() {
     let modalRef: any;
@@ -117,9 +126,21 @@ export class MainComponent implements OnInit {
     });
   }
 
-  choosePageSize(pageSize: number) {
-    this.data.paginatedData.pageSize = pageSize;
-    this.data.paginatedData.currentPage = 1;
+   // ------- PAGINATION --------- //
+
+  createPaginatedRequest(data: Data): PaginatedRequest {
+    const { filtered } = data.filterData
+    const { currentPage, pageSize, isSortDirectionAsc, sortBy, sortByDiscount } = data.paginatedData;
+    let sortDirection = isSortDirectionAsc ? 'ASC' : 'DESC';
+    if(filtered) {
+      const { filterBy, filterAlsoBy } = data.filterData;
+      return new PaginatedRequest(this.datasetName, currentPage, pageSize, sortDirection, sortBy, sortByDiscount, filtered, filterBy, filterAlsoBy);
+    }
+    return new PaginatedRequest(this.datasetName, currentPage, pageSize, sortDirection, sortBy, sortByDiscount);
+  }
+
+  handlePageChange(page: number) {
+    this.data.paginatedData.currentPage = page;
     this.showData(this.createPaginatedRequest(this.data));
   }
 }
