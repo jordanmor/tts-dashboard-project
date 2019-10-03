@@ -79,15 +79,11 @@ export class FilterComponent implements OnInit {
     } else {
       this.setFilterData();
       filterData.filterBy = `${this.filterBy}+${this.filterByValue}`;
-      filterData.filterAlsoBy = `${this.filterAlsoBy}+${this.filterAlsoByValue}`;
+      filterData.filterAlsoBy = this.filterAlsoByValue === '' ? this.filterAlsoBy : `${this.filterAlsoBy}+${this.filterAlsoByValue}`;
       filterData.filterName1 = this.filterBy;
       filterData.filterName2 = this.filterAlsoBy;
       this.filteredRequest(filterData);
     }
-  }
-
-  createFilteredRequest() {
-
   }
 
   setFilterData() {

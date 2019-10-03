@@ -42,7 +42,7 @@ table td {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(228,239,246,.15);
+  background-color: rgba(228,239,246,.25);
 }
 
 td.checkbox-container {
@@ -53,4 +53,8 @@ td.checkbox-container {
 .filtered-column {
   background-color: var(--color-tertiary);
   color: #fff;
+}
+
+.sorted {
+  background-color: #e4eff6;
 }

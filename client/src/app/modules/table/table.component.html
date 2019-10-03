@@ -1,24 +1,105 @@
 <div class="table-responsive table-container">
     <table class="table table-bordered table-striped">
 
+        <!-- TABLE HEADER -->
         <thead>
           <tr>
 
-            <!-- Table Headers -->
-            <th>ID <i (click)="sortDataBy('id')" class="fas fa-sort"></i></th>
-            <th>Name <i (click)="sortDataBy('name')" class="fas fa-sort"></i></th>
+            <!-- Id Table Header -->
+            <th [ngClass]="data.sortBy === 'id' ? 'sorted' : null">
+                ID 
+                <i (click)="sortDataBy('id')" 
+                [ngClass]="data.sortBy === 'id' && data.isSortDirectionAsc 
+                ? 'fas fa-arrow-up' 
+                :  data.sortBy === 'id' && !data.isSortDirectionAsc 
+                ? 'fas fa-arrow-down' 
+                : 'fas fa-sort'">
+                </i>
+            </th>
 
-            <!-- Product Headers Only -->
+            <!-- Name Table Header -->
+            <th [ngClass]="data.sortBy === 'name' ? 'sorted' : null">
+                Name 
+                <i (click)="sortDataBy('name')"
+                [ngClass]="data.sortBy === 'name' && data.isSortDirectionAsc 
+                ? 'fas fa-arrow-up' 
+                :  data.sortBy === 'name' && !data.isSortDirectionAsc 
+                ? 'fas fa-arrow-down' 
+                : 'fas fa-sort'">
+                </i>
+            </th>
+
+            <!-- PRODUCT HEADERS ONLY -->
             <ng-container *ngIf="datasetName === 'products'">
-                <th>Full Price <i (click)="sortDataBy('fullPrice')" class="fas fa-sort"></i></th>
-                <th>Sale Price <i (click)="sortDataBy('salePrice')" class="fas fa-sort"></i></th>
-                <th>Discount <i (click)="sortDataBy('discount')" class="fas fa-sort"></i></th>
-                <th [ngClass]="filterData.filterName1 === 'category' || filterData.filterName2 === 'category' ? 'filtered-column' : null">Category
-                    <i *ngIf="filterData.filterName1 !== 'category' && filterData.filterName2 !== 'category'" (click)="sortDataBy('category.name')" class="fas fa-sort"></i>
+                <!-- Full Price Table Header -->
+                <th [ngClass]="data.sortBy === 'fullPrice' ? 'sorted' : null">
+                    Full Price 
+                    <i (click)="sortDataBy('fullPrice')" 
+                    [ngClass]="data.sortBy === 'fullPrice' && data.isSortDirectionAsc 
+                                ? 'fas fa-arrow-up' 
+                                :  data.sortBy === 'fullPrice' && !data.isSortDirectionAsc 
+                                ? 'fas fa-arrow-down' 
+                                : 'fas fa-sort'">
+                    </i>
                 </th>
-                <th [ngClass]="filterData.filterName1 === 'supplier' || filterData.filterName2 === 'supplier' ? 'filtered-column' : null">Supplier 
-                    <i *ngIf="filterData.filterName1 !== 'supplier' && filterData.filterName2 !== 'supplier'" (click)="sortDataBy('supplier.name')" class="fas fa-sort"></i>
+
+                <!-- Sale Price Table Header -->
+                <th [ngClass]="data.sortBy === 'salePrice' ? 'sorted' : null">
+                    Sale Price 
+                    <i (click)="sortDataBy('salePrice')" 
+                    [ngClass]="data.sortBy === 'salePrice' && data.isSortDirectionAsc 
+                                ? 'fas fa-arrow-up' 
+                                :  data.sortBy === 'salePrice' && !data.isSortDirectionAsc 
+                                ? 'fas fa-arrow-down' 
+                                : 'fas fa-sort'">
+                    </i>
                 </th>
+
+                <!-- Discount Table Header -->
+                <th [ngClass]="data.sortBy === 'discount' ? 'sorted' : null">
+                    Discount 
+                    <i (click)="sortDataBy('discount')" 
+                    [ngClass]="data.sortBy === 'discount' && data.isSortDirectionAsc 
+                                ? 'fas fa-arrow-up' 
+                                :  data.sortBy === 'discount' && !data.isSortDirectionAsc 
+                                ? 'fas fa-arrow-down' 
+                                : 'fas fa-sort'">
+                    </i>
+                </th>
+
+                <!-- Category Table Header -->
+                <th [ngClass]="filterData.filterName1 === 'category' || filterData.filterName2 === 'category' 
+                                ? 'filtered-column' 
+                                : data.sortBy === 'category.name' ? 'sorted'
+                                : null ">
+                    Category
+                    <i *ngIf="filterData.filterName1 !== 'category' && filterData.filterName2 !== 'category'" 
+                        (click)="sortDataBy('category.name')"
+                        [ngClass]="data.sortBy === 'category.name' && data.isSortDirectionAsc 
+                                        ? 'fas fa-arrow-up' 
+                                        : data.sortBy === 'category.name' && !data.isSortDirectionAsc 
+                                        ? 'fas fa-arrow-down' 
+                                        : 'fas fa-sort'">
+                    </i>
+                </th>
+
+                <!-- Supplier Table Header -->
+                <th [ngClass]="filterData.filterName1 === 'supplier' || filterData.filterName2 === 'supplier' 
+                                ? 'filtered-column' 
+                                : data.sortBy === 'supplier.name' 
+                                ? 'sorted' 
+                                : null ">
+                    Supplier 
+                    <i *ngIf="filterData.filterName1 !== 'supplier' && filterData.filterName2 !== 'supplier'" 
+                       (click)="sortDataBy('supplier.name')" 
+                       [ngClass]="data.sortBy === 'supplier.name' && data.isSortDirectionAsc 
+                                    ? 'fas fa-arrow-up' 
+                                    : data.sortBy === 'supplier.name' && !data.isSortDirectionAsc 
+                                    ? 'fas fa-arrow-down' 
+                                    : 'fas fa-sort'">
+                    </i>
+                </th>
+                <!-- Availability Table Header -->
                 <th [ngClass]="filterData.filterName1 === 'availability' || filterData.filterName2 === 'availability' ? 'filtered-column' : null">Availability</th>
             </ng-container>
             
@@ -26,6 +107,7 @@
           </tr>
         </thead>
 
+        <!-- TABLE BODY -->
         <tbody *ngIf="data.dataset">
             <ng-container *ngFor="let dataItem of data.dataset">
 
