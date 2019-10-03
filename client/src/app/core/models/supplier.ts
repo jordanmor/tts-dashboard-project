@@ -2,6 +2,10 @@ export class Supplier {
   id: number;
   name?: string;
 
+  constructor() {
+    
+  }
+
   getId() {
     return this.id;
   }

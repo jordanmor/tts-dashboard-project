@@ -58,6 +58,7 @@ export class MainComponent implements OnInit {
     this.showData(this.createPaginatedRequest(this.data));
   }
 
+  // Populate paginated data
   showData(paginatedRequest: PaginatedRequest) {
     this.dataService.getPaginatedData(paginatedRequest).subscribe(response => {
       this.data.paginatedData.dataset = response.content;

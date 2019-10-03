@@ -26,7 +26,7 @@
                 <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.name }}</option>
             </select>
         </div>
-        <span class="error-price" *ngIf="addProductForm.get('salePrice').invalid && !addProductForm.get('salePrice').pristine">The sale price can not be higher than the full price</span>
+        <span class="error-price" *ngIf="addProductForm.get('salePrice').invalid && !addProductForm.get('salePrice').pristine">Sale price can not exceed full price</span>
         <div class="prices">
             <div class="form-group">
                 <label for="productPrice">Full Price</label>
