@@ -1,15 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
-:host {
+/* :host {
   --color-primary: #3a5a78;
   --color-primary-faded: rgba(58,90,120, 0.6);
   --color-secondary: #216bab;
   --color-tertiary: #f7941f;
   --color-primary-bg: #e4eff6;
   --color-primary-shadow: rgba(228,239,246,.25);
-}
+} */
 
-h2 {
-  color: var(--color-primary);
+h2,
+h4 {
+  color: #3a5a78;
   font-family: 'Roboto', sans-serif;
   font-weight: 600;
   margin: 0;
@@ -21,18 +22,23 @@ body {
 
 /* ----- BUTTON STYLES ----- */
 
+button,
+button:focus {
+  outline: none;
+}
+
 .btn {
-  border-color: var(--color-primary-faded);
+  border-color: rgba(58,90,120, 0.6);
 }
 
 .btn-danger {
-  background-color: var(--color-tertiary);
-  border-color: var(--color-tertiary);
+  background-color: #f7941f;
+  border-color: #f7941f;
 }
 
 .btn-secondary {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
+  background-color: #3a5a78;
+  border-color: #3a5a78;
 }
 
 .btn-secondary:hover,
@@ -50,20 +56,43 @@ body {
 
 .btn-outline-secondary:hover {
   color: #fff;
-  background-color: var(--color-primary);
-  border-color: var(--color-primary-faded);
+  background-color: #3a5a78;
+  border-color: rgba(58,90,120, 0.6);
 }
 
 .show>.btn-outline-secondary.dropdown-toggle {
   color: #fff;
-  background-color: var(--color-primary);
-  border-color: var(--color-primary-faded);
+  background-color: #3a5a78;
+  border-color: rgba(58,90,120, 0.6);
 }
 
 .btn-outline-secondary:focus,
 .show>.btn-outline-secondary.dropdown-toggle:focus,
 .show>.btn-secondary.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem var(--color-primary-shadow);
+  box-shadow: 0 0 0 0.2rem rgba(228,239,246,.25);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.btn-secondary:disabled:hover {
+  background-color: transparent;
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
+
+/* ----- FORM VALIDATION ----- */
+
+input.ng-valid[required], input.ng-valid.required,
+select.ng-valid[required], select.ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched   {
+  border-left: 5px solid #a94442; /* red */
 }
 
 /* ----- CHECKBOX STYLES ----- */
@@ -94,6 +123,137 @@ body {
   content: '\2714';
   position: absolute;
   font-size: 1.4rem;
+  color: #3a5a78;
   top: -11px;
   left: 1px;
+}
+
+/* ----- MODAL STYLES ----- */
+
+.modal-content {
+  border: 6px solid #3a5a78;
+}
+
+.modal-header {
+  position: relative;
+}
+
+.modal .prices {
+  display: flex;
+  justify-content: center;
+  margin-bottom: .5rem;
+}
+
+.modal input {
+  border-radius: 4px;
+}
+
+.modal .checkbox-label span {
+  margin-left: .4rem;
+}
+
+.modal .checkbox {
+  margin-bottom: 1rem;
+}
+
+.error-price {
+  display: block;
+  margin-bottom: 1rem;
+  color: #a94442;
+}
+
+.modal-footer {
+  position: relative;
+}
+
+.modal-footer>.corner-accent{
+  margin-left: 0;
+}
+
+.corner-accent {
+  position: absolute;
+}
+
+.corner-accent::before,
+.corner-accent::after {
+  content: '';
+  position: absolute;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.corner-accent::after {
+  border-width: .5em;
+}
+
+/* - Corner Accent Top Right - */
+
+.corner-accent.top-right {
+  top: 0;
+  right: 0;
+}
+
+.corner-accent.top-right::before,
+.corner-accent.top-right::after {
+  top: 0;
+  right: 0;
+}
+
+.corner-accent.top-right::after {
+  border-right-color: #f7941f;
+  border-top-color: #f7941f;
+}
+
+/* - Corner Accent Top Left - */
+
+.corner-accent.top-left {
+  top: 0;
+  left: 0;
+}
+
+.corner-accent.top-left::before,
+.corner-accent.top-left::after {
+  top: 0;
+  left: 0;
+}
+
+.corner-accent.top-left::after {
+  border-left-color: #f7941f;
+  border-top-color: #f7941f;
+}
+
+/* - Corner Accent Bottom Left - */
+
+.corner-accent.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.corner-accent.bottom-left::before,
+.corner-accent.bottom-left::after {
+  bottom: 0;
+  left: 0;
+}
+
+.corner-accent.bottom-left::after {
+  border-left-color: #f7941f;
+  border-bottom-color: #f7941f;
+}
+
+/* - Corner Accent Bottom Right - */
+
+.corner-accent.bottom-right {
+  bottom: 0;
+  right: 0;
+}
+
+.corner-accent.bottom-right::before,
+.corner-accent.bottom-right::after {
+  bottom: 0;
+  right: 0;
+}
+
+.corner-accent.bottom-right::after {
+  border-right-color: #f7941f;
+  border-bottom-color: #f7941f;
 }
