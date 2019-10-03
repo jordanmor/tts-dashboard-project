@@ -83,7 +83,7 @@
 
                 <!-- <button *ngIf="filterBy !== '' && filterId !== 0" class="btn btn-outline-secondary">Submit</button> -->
             </div>
-            <button class="btn btn-outline-secondary filter-btn">
+            <button class="btn btn-outline-secondary filter-btn" [disabled]="!filterOn && filterByValue === ''">
                 Turn Filter {{filterOn ? "Off" : "On"}}
             </button>
         </form>
