@@ -7,7 +7,7 @@
 
     <div ngbDropdownMenu aria-labelledby="dropdownFilterForm">
 
-        <form [formGroup]="filterForm" class="px-4 py-3" (ngSubmit)="onSubmitFilterForm()">
+        <form [formGroup]="filterForm" class="px-4 py-3" (ngSubmit)="toggleFilter()">
 
             <!-- <button class="btn btn-outline-secondary filter-btn" (click)="toggleFilter()">
                     Turn Filter {{filterOn ? "Off" : "On"}}
@@ -18,7 +18,7 @@
                     <option [selected]="true" disabled hidden>Filter By</option>
                     <option [value]="'category'">Category</option>
                     <option [value]="'supplier'">Supplier</option>
-                    <option [value]="'availability'">Availability</option>
+                    <option *ngIf="filterAlsoBy !== 'availability'" [value]="'availability'">Availability</option>
                 </select>
 
                 <div *ngIf="filterBy !== ''" class="form-group">
@@ -38,25 +38,26 @@
                     <ng-template #showAvailability>
                         <div class="form-group checkbox-container">
                             <label class="checkbox-label">Is Available
-                                <input type="checkbox" formControlName="filterByValue" [checked]=true>
+                                <input (change)="setFilterByValue($event)" type="checkbox" formControlName="filterByValue" [checked]=true>
                                 <span class=""></span>
                             </label>
                         </div>
                     </ng-template>
 
                     <div *ngIf="filterByValue !== ''" class="form-group">
-                        <select (change)="setSecondFilterBy($event)" type="text" formControlName="filterAlsoBy" class="form-control">
-                            <option [selected]="true" disabled hidden>Also Filter By</option>
+                        <select (change)="setFilterAlsoBy($event)" type="text" formControlName="filterAlsoBy" class="form-control">
+                            <option (change)="setFilterAlsoByValue($event)" [selected]="true" disabled hidden>Also Filter By</option>
                             <option *ngIf="filterBy === 'availability'" [value]="'category'">Category</option>
                             <option *ngIf="filterBy === 'availability'" [value]="'supplier'">Supplier</option>
                             <option *ngIf="filterBy !== 'availability'" [value]="'availability'">Availability</option>
+                            <option [value]="'none'">None</option>
                         </select>
                     </div>
 
                     <div *ngIf="filterAlsoBy !== 'none'" class="form-group">
 
                         <ng-container *ngIf="filterBy === 'availability'; else showAvailabilityTwo">
-                            <select (change)="setFilterByValue($event)" formControlName="filterAlsoByValue" type="text" class="form-control">
+                            <select (change)="setFilterAlsoByValue($event)" formControlName="filterAlsoByValue" type="text" class="form-control">
                                 <option [value]="''" selected disabled hidden>Select {{filterAlsoBy}}</option>
                                 <ng-container *ngIf="filterAlsoBy === 'category'">
                                     <option *ngFor="let category of categories" [attr.value]="category.id">{{ category.name }}</option>
@@ -70,7 +71,7 @@
                         <ng-template #showAvailabilityTwo>
                             <div class="form-group checkbox-container">
                                 <label class="checkbox-label">Is Available
-                                    <input type="checkbox" formControlName="filterAlsoByValue" [checked]=true>
+                                    <input (change)="setFilterAlsoByValue($event)" type="checkbox" formControlName="filterAlsoByValue" [checked]=true>
                                     <span class=""></span>
                                 </label>
                             </div>
