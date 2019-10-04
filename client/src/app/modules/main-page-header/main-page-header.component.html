@@ -18,9 +18,9 @@
 </div>
 
 <!-- Alerts -->
-<div *ngIf='show' class="alert-group">
+<div *ngIf="errorMessage !== ''" class="alert-group">
     <div [className]="'alert alert-' +  alertType" role="alert">
-        ...
+        {{ errorMessage }}
         <button (click)=hideAlert() type="button" class="close">
             <span aria-hidden="true">&times;</span>
         </button>

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Category } from 'src/app/core/models/category';
 import { Supplier } from 'src/app/core/models/supplier';
 import { FilterData } from '../../core/models/filterData';
+import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
   selector: 'app-main-page-header',
@@ -10,8 +11,8 @@ import { FilterData } from '../../core/models/filterData';
 })
 export class MainPageHeaderComponent implements OnInit {
 
-  show: boolean = false;
   alertType: string = 'success';
+  errorMessage: string;
   @Input() datasetTitle: string;
   @Input() datasetName: string;
   @Input() totalDataItems: number;
@@ -20,14 +21,16 @@ export class MainPageHeaderComponent implements OnInit {
   @Output() onModalFormSubmit = new EventEmitter();
   @Output() onFilteredRequest = new EventEmitter();
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
-
+    this.dataService.getErrorMessage().subscribe(errorMessage => {
+      this.errorMessage = errorMessage;
+    });
   }
 
   hideAlert() {
-    this.show = false;
+    this.dataService.updateErrorMessage('');
   }
 
   openModal() {

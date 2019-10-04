@@ -42,14 +42,19 @@ public class SupplierService {
         return ResponseEntity.created(location).build();
     }
 
-    public ResponseEntity<Supplier> updateSupplier(Supplier category, long id) {
+    public ResponseEntity<String> updateSupplier(Supplier supplier, long id) {
         Optional<Supplier> supplierOptional = supplierRepository.findById(id);
         if (!supplierOptional.isPresent()) {
             // Sends back a status of 404 Not Found
             return ResponseEntity.notFound().build();
         }
-        category.setId(id);
-        supplierRepository.save(category);
+        Optional<Supplier> presentSupplier = supplierRepository.findByName(supplier.getName());
+        // Does not reject a supplier update of the same name when the supplier with that name is updating itself
+        if(presentSupplier.isPresent() && !supplierOptional.get().getName().equals(presentSupplier.get().getName())) {
+            return new ResponseEntity<String>("A supplier already exists with this name", HttpStatus.BAD_REQUEST);
+        }
+        supplier.setId(id);
+        supplierRepository.save(supplier);
         // Sends back a status of 204 Not Content, which implies a successful request
         return ResponseEntity.noContent().build();
     }
