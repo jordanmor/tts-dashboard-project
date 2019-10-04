@@ -74,7 +74,7 @@ module.exports = "<app-main\n  [datasetTitle]=\"datasetTitle\"\n  [datasetName]=
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"datasetName === 'products'\" ngbDropdown class=\"d-inline-block filter\">\n\n    <button [ngClass]=\"filterOn ? 'btn btn-secondary' : 'btn btn-outline-secondary'\" id=\"dropdownForm1\" ngbDropdownToggle>\n        Filter \n        <span>{{filterOn ? \"On\" : \"Off\"}}</span>\n    </button>\n\n    <div ngbDropdownMenu aria-labelledby=\"dropdownFilterForm\">\n\n        <form [formGroup]=\"filterForm\" class=\"px-4 py-3\" (ngSubmit)=\"toggleFilter()\">\n\n            <!-- <button class=\"btn btn-outline-secondary filter-btn\" (click)=\"toggleFilter()\">\n                    Turn Filter {{filterOn ? \"Off\" : \"On\"}}\n            </button> -->\n\n            <div class=\"form-group\">\n                <select (change)=\"setFilterBy($event)\" formControlName=\"filterBy\" type=\"text\" class=\"form-control\">\n                    <option [selected]=\"true\" disabled hidden>Filter By</option>\n                    <option [value]=\"'category'\">Category</option>\n                    <option [value]=\"'supplier'\">Supplier</option>\n                    <option *ngIf=\"filterAlsoBy !== 'availability'\" [value]=\"'availability'\">Availability</option>\n                </select>\n\n                <div *ngIf=\"filterBy !== ''\" class=\"form-group\">\n\n                    <ng-container *ngIf=\"filterBy !== 'availability'; else showAvailability\">\n                        <select (change)=\"setFilterByValue($event)\" formControlName=\"filterByValue\" type=\"text\" class=\"form-control\">\n                            <option [value]=\"''\" selected disabled hidden>Select {{filterBy}}</option>\n                            <ng-container *ngIf=\"filterBy === 'category'\">\n                                <option *ngFor=\"let category of categories\" [attr.value]=\"category.id\">{{ category.name }}</option>\n                            </ng-container>\n                            <ng-container *ngIf=\"filterBy === 'supplier'\">\n                                <option *ngFor=\"let supplier of suppliers\" [attr.value]=\"supplier.id\">{{ supplier.name }}</option>\n                            </ng-container>\n                        </select>\n                    </ng-container>\n\n                    <ng-template #showAvailability>\n                        <div class=\"form-group checkbox-container\">\n                            <label class=\"checkbox-label\">Is Available\n                                <input (change)=\"setFilterByValue($event)\" type=\"checkbox\" formControlName=\"filterByValue\" [checked]=true>\n                                <span class=\"\"></span>\n                            </label>\n                        </div>\n                    </ng-template>\n\n                    <div *ngIf=\"filterByValue !== ''\" class=\"form-group\">\n                        <select (change)=\"setFilterAlsoBy($event)\" type=\"text\" formControlName=\"filterAlsoBy\" class=\"form-control\">\n                            <option (change)=\"setFilterAlsoByValue($event)\" [selected]=\"true\" disabled hidden>Also Filter By</option>\n                            <option *ngIf=\"filterBy === 'availability'\" [value]=\"'category'\">Category</option>\n                            <option *ngIf=\"filterBy === 'availability'\" [value]=\"'supplier'\">Supplier</option>\n                            <option *ngIf=\"filterBy !== 'availability'\" [value]=\"'availability'\">Availability</option>\n                            <option [value]=\"'none'\">None</option>\n                        </select>\n                    </div>\n\n                    <div *ngIf=\"filterAlsoBy !== 'none'\" class=\"form-group\">\n\n                        <ng-container *ngIf=\"filterBy === 'availability'; else showAvailabilityTwo\">\n                            <select (change)=\"setFilterAlsoByValue($event)\" formControlName=\"filterAlsoByValue\" type=\"text\" class=\"form-control\">\n                                <option [value]=\"''\" selected disabled hidden>Select {{filterAlsoBy}}</option>\n                                <ng-container *ngIf=\"filterAlsoBy === 'category'\">\n                                    <option *ngFor=\"let category of categories\" [attr.value]=\"category.id\">{{ category.name }}</option>\n                                </ng-container>\n                                <ng-container *ngIf=\"filterAlsoBy === 'supplier'\">\n                                    <option *ngFor=\"let supplier of suppliers\" [attr.value]=\"supplier.id\">{{ supplier.name }}</option>\n                                </ng-container>\n                            </select>\n                        </ng-container>\n\n                        <ng-template #showAvailabilityTwo>\n                            <div class=\"form-group checkbox-container\">\n                                <label class=\"checkbox-label\">Is Available\n                                    <input (change)=\"setFilterAlsoByValue($event)\" type=\"checkbox\" formControlName=\"filterAlsoByValue\" [checked]=true>\n                                    <span class=\"\"></span>\n                                </label>\n                            </div>\n                        </ng-template>\n\n                    </div>\n\n                </div>\n\n                <!-- <button *ngIf=\"filterBy !== '' && filterId !== 0\" class=\"btn btn-outline-secondary\">Submit</button> -->\n            </div>\n            <button class=\"btn btn-outline-secondary filter-btn\" [disabled]=\"!filterOn && filterByValue === ''\">\n                Turn Filter {{filterOn ? \"Off\" : \"On\"}}\n            </button>\n        </form>\n    </div>\n</div> <!-- /Filter End -->\n"
+module.exports = "<div *ngIf=\"datasetName === 'products'\" ngbDropdown class=\"d-inline-block filter\">\n\n    <button [ngClass]=\"filterOn ? 'btn btn-secondary' : 'btn btn-outline-secondary'\" id=\"dropdownForm1\" ngbDropdownToggle>\n        Filter \n        <span>{{filterOn ? \"On\" : \"Off\"}}</span>\n    </button>\n\n    <div ngbDropdownMenu aria-labelledby=\"dropdownFilterForm\">\n\n        <form [formGroup]=\"filterForm\" class=\"px-4 py-3\" (ngSubmit)=\"toggleFilter()\">\n\n            <div class=\"form-group\">\n                <select (change)=\"setFilterBy($event)\" formControlName=\"filterBy\" type=\"text\" class=\"form-control\">\n                    <option [selected]=\"true\" disabled hidden>Filter By</option>\n                    <option [value]=\"'category'\">Category</option>\n                    <option [value]=\"'supplier'\">Supplier</option>\n                    <option *ngIf=\"filterAlsoBy !== 'availability'\" [value]=\"'availability'\">Availability</option>\n                </select>\n            </div><!-- End of form group -->\n\n            <ng-container *ngIf=\"filterBy !== ''\">\n\n                <div class=\"form-group\">\n\n                    <ng-container *ngIf=\"filterBy !== 'availability'; else showAvailability\">\n                        <select (change)=\"setFilterByValue($event)\" formControlName=\"filterByValue\" type=\"text\" class=\"form-control\">\n                            <option [value]=\"''\" selected disabled hidden>Select {{filterBy}}</option>\n                            <ng-container *ngIf=\"filterBy === 'category'\">\n                                <option *ngFor=\"let category of categories\" [attr.value]=\"category.id\">{{ category.name }}</option>\n                            </ng-container>\n                            <ng-container *ngIf=\"filterBy === 'supplier'\">\n                                <option *ngFor=\"let supplier of suppliers\" [attr.value]=\"supplier.id\">{{ supplier.name }}</option>\n                            </ng-container>\n                        </select>\n                    </ng-container>\n\n                    <ng-template #showAvailability>\n                        <div class=\"form-group checkbox-container\">\n                            <label class=\"checkbox-label\">Is Available\n                                <input (change)=\"setFilterByValue($event)\" type=\"checkbox\" formControlName=\"filterByValue\" [checked]=true>\n                                <span class=\"\"></span>\n                            </label>\n                        </div>\n                    </ng-template>\n\n                </div><!-- End of form group -->\n\n                <div *ngIf=\"filterByValue !== '' || filterBy === 'availability'\" class=\"form-group\">\n                    <select (change)=\"setFilterAlsoBy($event)\" type=\"text\" formControlName=\"filterAlsoBy\" class=\"form-control\">\n                        <option (change)=\"setFilterAlsoByValue($event)\" [selected]=\"true\" disabled hidden>Also Filter By</option>\n                        <option *ngIf=\"filterBy === 'availability'\" [value]=\"'category'\">Category</option>\n                        <option *ngIf=\"filterBy === 'availability'\" [value]=\"'supplier'\">Supplier</option>\n                        <option *ngIf=\"filterBy !== 'availability'\" [value]=\"'availability'\">Availability</option>\n                        <option [value]=\"'none'\">None</option>\n                    </select>\n                </div>\n\n                <div *ngIf=\"filterAlsoBy !== 'none'\" class=\"form-group\">\n\n                    <ng-container *ngIf=\"filterBy === 'availability'; else showAvailabilityTwo\">\n                        <select (change)=\"setFilterAlsoByValue($event)\" formControlName=\"filterAlsoByValue\" type=\"text\" class=\"form-control\">\n                            <option [value]=\"''\" selected disabled hidden>Select {{filterAlsoBy}}</option>\n                            <ng-container *ngIf=\"filterAlsoBy === 'category'\">\n                                <option *ngFor=\"let category of categories\" [attr.value]=\"category.id\">{{ category.name }}</option>\n                            </ng-container>\n                            <ng-container *ngIf=\"filterAlsoBy === 'supplier'\">\n                                <option *ngFor=\"let supplier of suppliers\" [attr.value]=\"supplier.id\">{{ supplier.name }}</option>\n                            </ng-container>\n                        </select>\n                    </ng-container>\n\n                    <ng-template #showAvailabilityTwo>\n                        <div class=\"form-group checkbox-container\">\n                            <label class=\"checkbox-label\">Is Available\n                                <input (change)=\"setFilterAlsoByValue($event)\" type=\"checkbox\" formControlName=\"filterAlsoByValue\" [checked]=true>\n                                <span class=\"\"></span>\n                            </label>\n                        </div>\n                    </ng-template>\n\n                </div><!-- End of form group -->\n            </ng-container>\n            <button class=\"btn btn-outline-secondary filter-btn\" [disabled]=\"!filterOn && filterByValue === '' && filterBy !== 'availability'\">\n                Turn Filter {{filterOn ? \"Off\" : \"On\"}}\n            </button>\n        </form>\n    </div>\n</div> <!-- /Filter End -->\n"
 
 /***/ }),
 
@@ -85,7 +85,7 @@ module.exports = "<div *ngIf=\"datasetName === 'products'\" ngbDropdown class=\"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"page-header\">\n    <div class=\"title\">\n        <h2>{{ datasetTitle.plural }}</h2>\n        <span>({{totalDataItems}})</span>\n    </div>\n    <div>\n        <!-- Add an Item -->\n        <button type=\"button\" (click)=\"openModal()\" class=\"btn btn-outline-secondary add\">Add a {{ datasetTitle.singular }}</button>\n        <!-- Filter -->\n        <app-filter\n            [categories]=\"categories\"\n            [suppliers]=\"suppliers\"\n            [datasetName]=\"datasetName\"\n            (onFilteredRequest)=\"filteredRequest($event)\"\n        >\n        </app-filter>\n    </div>\n</div>\n\n<!-- Alerts -->\n<div *ngIf='show' class=\"alert-group\">\n    <div [className]=\"'alert alert-' +  alertType\" role=\"alert\">\n        ...\n        <button (click)=hideAlert() type=\"button\" class=\"close\">\n            <span aria-hidden=\"true\">&times;</span>\n        </button>\n    </div>\n</div>\n\n"
+module.exports = "<div class=\"page-header\">\n    <div class=\"title\">\n        <h2>{{ datasetTitle.plural }}</h2>\n        <span>({{totalDataItems}})</span>\n    </div>\n    <div>\n        <!-- Add an Item -->\n        <button type=\"button\" (click)=\"openModal()\" class=\"btn btn-outline-secondary add\">Add a {{ datasetTitle.singular }}</button>\n        <!-- Filter -->\n        <app-filter\n            [categories]=\"categories\"\n            [suppliers]=\"suppliers\"\n            [datasetName]=\"datasetName\"\n            (onFilteredRequest)=\"filteredRequest($event)\"\n        >\n        </app-filter>\n    </div>\n</div>\n\n<!-- Alerts -->\n<div *ngIf=\"errorMessage !== ''\" class=\"alert-group\">\n    <div [className]=\"'alert alert-' +  alertType\" role=\"alert\">\n        {{ errorMessage }}\n        <button (click)=hideAlert() type=\"button\" class=\"close\">\n            <span aria-hidden=\"true\">&times;</span>\n        </button>\n    </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -708,18 +708,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataService", function() { return DataService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+
+
 
 
 
 let DataService = class DataService {
-    // Local host and path for testing and development
-    // host: string = 'http://localhost:8080';
     constructor(http) {
         this.http = http;
         // Heroku host for production
         this.host = 'https://ttsdashboard.herokuapp.com';
+        // Local host and path for testing and development
+        //   host: string = 'http://localhost:8080';
+        this.messageSource = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]('');
+        this.message = this.messageSource.asObservable();
     }
+    // --------- ERROR MESSAGING --------- //
+    getErrorMessage() {
+        return this.message;
+    }
+    updateErrorMessage(message) {
+        this.messageSource.next(message);
+    }
+    // --------- CRUD OPERATIONS --------- //
+    // GET PAGINATED DATA
     getPaginatedData(paginatedRequest) {
         const { datasetName, page, pageSize, sortDirection, sortBy, sortByDiscount, filtered } = paginatedRequest;
         if (datasetName === 'products') {
@@ -736,24 +751,42 @@ let DataService = class DataService {
             return this.http.get(`${this.host}/${datasetName}?page=${page}&pageSize=${pageSize}&direction=${sortDirection}&sortBy=${sortBy}`);
         }
     }
+    // GET ALL CATEGORIES
     getAllCategories() {
         return this.http.get(`${this.host}/categories/all`);
     }
+    // GET ALL SUPPLIERS
     getAllSuppliers() {
         return this.http.get(`${this.host}/suppliers/all`);
     }
-    removeItem(id, datasetName) {
-        return this.http.delete(`${this.host}/${datasetName}/${id}`);
-    }
-    updateData(dataItem, datasetName) {
-        return this.http.put(`${this.host}/${datasetName}/${dataItem.id}`, dataItem);
-    }
+    // POST
     createItem(dataItem, datasetName) {
-        return this.http.post(`${this.host}/${datasetName}`, dataItem);
+        return this.http.post(`${this.host}/${datasetName}`, dataItem)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])((err) => {
+            this.messageSource.next(err.error);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(err);
+        }));
+    }
+    // PUT
+    updateData(dataItem, datasetName) {
+        return this.http.put(`${this.host}/${datasetName}/${dataItem.id}`, dataItem)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])((err) => {
+            this.messageSource.next(err.error);
+            window.scrollTo(0, 0);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(err);
+        }));
+    }
+    // DELETE
+    removeItem(id, datasetName) {
+        return this.http.delete(`${this.host}/${datasetName}/${id}`)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])((err) => {
+            this.messageSource.next(err.error);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(err);
+        }));
     }
 };
 DataService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] }
 ];
 DataService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -1002,19 +1035,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainPageHeaderComponent", function() { return MainPageHeaderComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var src_app_core_services_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/core/services/data.service */ "./src/app/core/services/data.service.ts");
+
 
 
 let MainPageHeaderComponent = class MainPageHeaderComponent {
-    constructor() {
-        this.show = false;
+    constructor(dataService) {
+        this.dataService = dataService;
         this.alertType = 'success';
         this.onModalFormSubmit = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
         this.onFilteredRequest = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
     }
     ngOnInit() {
+        this.dataService.getErrorMessage().subscribe(errorMessage => {
+            this.errorMessage = errorMessage;
+        });
     }
     hideAlert() {
-        this.show = false;
+        this.dataService.updateErrorMessage('');
     }
     openModal() {
         this.onModalFormSubmit.emit();
@@ -1023,6 +1061,9 @@ let MainPageHeaderComponent = class MainPageHeaderComponent {
         this.onFilteredRequest.emit(filterData);
     }
 };
+MainPageHeaderComponent.ctorParameters = () => [
+    { type: src_app_core_services_data_service__WEBPACK_IMPORTED_MODULE_2__["DataService"] }
+];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
 ], MainPageHeaderComponent.prototype, "datasetTitle", void 0);
