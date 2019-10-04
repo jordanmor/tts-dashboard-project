@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController("/")
-@CrossOrigin(origins = "https://ttsdashboard.herokuapp.com")
+@CrossOrigin(origins = "https://jordanmor.github.io")
 @RequestMapping("/")
 public class HomeController {
 

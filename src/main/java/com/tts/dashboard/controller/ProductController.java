@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin(origins = "https://ttsdashboard.herokuapp.com")
+@CrossOrigin(origins = "https://jordanmor.github.io")
 @RequestMapping("/products")
 public class ProductController {
 

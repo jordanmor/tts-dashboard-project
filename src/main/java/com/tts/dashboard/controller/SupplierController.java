@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "https://ttsdashboard.herokuapp.com")
+@CrossOrigin(origins = "https://jordanmor.github.io")
 @RequestMapping("/suppliers")
 public class SupplierController {
 
