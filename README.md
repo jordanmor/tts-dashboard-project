@@ -76,7 +76,7 @@ for the Heroku connection and use the following properties to use the app with y
 5. Go to the file `client/src/core/services/data.service.ts` and:  
   Comment out the following url setting used in production for connecting to the API hosted on Heroku
       ```
-    host: string = 'https://dashboard.herokuapp.com';
+    host: string = 'https://ttsdashboard.herokuapp.com';
     ```
     Uncomment the following url setting to use for local development and testing:
     ```
@@ -93,7 +93,7 @@ You can optionally launch the server and automatically open a browser window by 
 
 **Build**
 
-Run `ng build` to build the project. The build artifacts will be stored in the folder `../docs/` located in the main project's root directory. Use the `--prod` flag for a production build. 
+Run `ng build` to build the project. The build artifacts will be stored in the folder `../docs/` located in the main project's root directory.
 
 In order for the build files to be saved in the `../docs` folder located outside the angular directory, the normal build output path has been changed in the `angular.json` file settings to the following:
 - outputPath set to ../docs

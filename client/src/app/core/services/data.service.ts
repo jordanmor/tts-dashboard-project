@@ -12,7 +12,11 @@ import { Supplier } from '../models/supplier';
 
 export class DataService {
 
-  host: string = 'http://localhost:8080';
+  // Heroku host for production
+  host: string = 'https://ttsdashboard.herokuapp.com';
+
+  // Local host and path for testing and development
+  // host: string = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DatasetTitle } from '../../core/models/datasetTitle';
 
 @Component({
   selector: 'app-products',
@@ -8,11 +9,8 @@ import { Component } from '@angular/core';
 export class ProductsComponent {
 
   datasetName: string = 'products';
-  datasetTitle: object = {
-    singular: "Product",
-    plural: "Products"
-  }
+  datasetTitle: DatasetTitle = new DatasetTitle("Product", "Products");
 
-  constructor() { }
+  constructor() {}
 
 }
