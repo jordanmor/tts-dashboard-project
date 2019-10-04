@@ -42,11 +42,16 @@ public class CategoryService {
         return ResponseEntity.created(location).build();
     }
 
-    public ResponseEntity<Category> updateCategory(Category category, long id) {
+    public ResponseEntity<String> updateCategory(Category category, long id) {
         Optional<Category> categoryOptional = categoryRepository.findById(id);
         if (!categoryOptional.isPresent()) {
             // Sends back a status of 404 Not Found
             return ResponseEntity.notFound().build();
+        }
+        Optional<Category> presentCategory = categoryRepository.findByName(category.getName());
+        // Does not reject a category update of the same name when the category with that name is updating itself
+        if(presentCategory.isPresent() && !categoryOptional.get().getName().equals(presentCategory.get().getName())) {
+            return new ResponseEntity<String>("A category already exists with this name", HttpStatus.BAD_REQUEST);
         }
         category.setId(id);
         categoryRepository.save(category);

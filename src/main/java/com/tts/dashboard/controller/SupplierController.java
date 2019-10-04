@@ -35,7 +35,7 @@ public class SupplierController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Supplier> updateSupplier(@RequestBody Supplier category, @PathVariable long id) {
+    public ResponseEntity<String> updateSupplier(@RequestBody Supplier category, @PathVariable long id) {
         return supplierService.updateSupplier(category, id);
     }
 

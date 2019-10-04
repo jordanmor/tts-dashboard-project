@@ -37,7 +37,8 @@ public class ProductService {
         return findAllPaginated(page, pageSize, direction, sortBy);
     }
 
-    public Page<Product> findProductsFilteredAndPaginated(int page, int pageSize, String direction, String sortBy, boolean sortByDiscount, String filterBy, String filterAlsoBy) {
+    public Page<Product> findProductsFilteredAndPaginated(
+            int page, int pageSize, String direction, String sortBy, boolean sortByDiscount, String filterBy, String filterAlsoBy) {
         Map<String, String> filteredValues = getFilterValues(filterBy, filterAlsoBy);
         Pageable paginatedPages = PageRequest.of(page, pageSize, Sort.Direction.fromString(direction), sortBy);
         Pageable paginatedPagesForDiscountSort = PageRequest.of(page, pageSize);
@@ -51,19 +52,23 @@ public class ProductService {
              if(filterAlsoBy.equals("none")) {
                  if(filterBy.equals("category")) {
                      // Return Products Filtered by CategoryId
-                     return findProductsFilteredByCategory(id, sortByDiscount, direction, paginatedPages, paginatedPagesForDiscountSort);
+                     return findProductsFilteredByCategory(
+                             id, sortByDiscount, direction, paginatedPages, paginatedPagesForDiscountSort);
                  } else {
                      // Return Products Filtered by SupplierId
-                     return findProductsFilteredBySupplier(id, sortByDiscount, direction, paginatedPages, paginatedPagesForDiscountSort);
+                     return findProductsFilteredBySupplier(
+                             id, sortByDiscount, direction, paginatedPages, paginatedPagesForDiscountSort);
                  }
              } else {
                  boolean isAvailable = Boolean.parseBoolean(filteredValues.get("filterAlsoByValue"));
                  if(filterBy.equals("category")) {
                      // Return Products Filtered by CategoryId and Availability
-                     return findProductsFilteredByCategoryAndAvailability(id, isAvailable, sortByDiscount, direction, paginatedPages, paginatedPagesForDiscountSort);
+                     return findProductsFilteredByCategoryAndAvailability(
+                             id, isAvailable, sortByDiscount, direction, paginatedPages, paginatedPagesForDiscountSort);
                  } else {
                      // Return Products Filtered by SupplierId and Availability
-                     return findProductsFilteredBySupplierAndAvailability(id, isAvailable, sortByDiscount, direction, paginatedPages, paginatedPagesForDiscountSort);
+                     return findProductsFilteredBySupplierAndAvailability(
+                             id, isAvailable, sortByDiscount, direction, paginatedPages, paginatedPagesForDiscountSort);
                  }
              }
          }
@@ -84,11 +89,17 @@ public class ProductService {
         return ResponseEntity.created(location).build();
     }
 
-    public ResponseEntity<Product> updateProduct(Product product, long id) {
+    public ResponseEntity<String> updateProduct(Product product, long id) {
         Optional<Product> productOptional = productRepository.findById(id);
         if (!productOptional.isPresent()) {
             // Sends back a status of 404 Not Found
             return ResponseEntity.notFound().build();
+        }
+        Optional<Product> newProduct = productRepository.findByName(product.getName());
+        // Does not reject a product update of the same name when the product with that name is updating itself
+        if(newProduct.isPresent() && !productOptional.get().getName().equals(newProduct.get().getName())) {
+            // If product already exists with same name, send back a message and a status of 400 Bad Request
+            return new ResponseEntity<String>("A product already exists with this name", HttpStatus.BAD_REQUEST);
         }
         product.setId(id);
         productRepository.save(product);
@@ -107,7 +118,8 @@ public class ProductService {
         return ResponseEntity.noContent().build();
     }
 
-    private Page<Product> findProductsFilteredByCategory(long id, boolean sortByDiscount, String direction, Pageable paginatedPages, Pageable paginatedPagesForDiscountSort) {
+    private Page<Product> findProductsFilteredByCategory(
+            long id, boolean sortByDiscount, String direction, Pageable paginatedPages, Pageable paginatedPagesForDiscountSort) {
         if(sortByDiscount) {
             return paginateList(productRepository.findByCategoryId(id), paginatedPagesForDiscountSort, direction);
         } else {
@@ -115,15 +127,19 @@ public class ProductService {
         }
     }
 
-    private Page<Product> findProductsFilteredByCategoryAndAvailability(long id, boolean isAvailable, boolean sortByDiscount, String direction, Pageable paginatedPages, Pageable paginatedPagesForDiscountSort) {
+    private Page<Product> findProductsFilteredByCategoryAndAvailability(
+            long id, boolean isAvailable, boolean sortByDiscount, String direction,
+            Pageable paginatedPages, Pageable paginatedPagesForDiscountSort) {
         if(sortByDiscount) {
-            return paginateList(productRepository.findByCategoryIdAndAvailabilityEquals(id, isAvailable), paginatedPagesForDiscountSort, direction);
+            return paginateList(productRepository.findByCategoryIdAndAvailabilityEquals(
+                    id, isAvailable), paginatedPagesForDiscountSort, direction);
         } else {
             return productRepository.findByCategoryIdAndAvailabilityEquals(id, isAvailable, paginatedPages);
         }
     }
 
-    private Page<Product> findProductsFilteredBySupplier(long id, boolean sortByDiscount, String direction, Pageable paginatedPages, Pageable paginatedPagesForDiscountSort) {
+    private Page<Product> findProductsFilteredBySupplier(
+            long id, boolean sortByDiscount, String direction, Pageable paginatedPages, Pageable paginatedPagesForDiscountSort) {
         if(sortByDiscount) {
             return paginateList(productRepository.findBySupplierId(id), paginatedPagesForDiscountSort, direction);
         } else {
@@ -131,9 +147,12 @@ public class ProductService {
         }
     }
 
-    private Page<Product> findProductsFilteredBySupplierAndAvailability(long id, boolean isAvailable, boolean sortByDiscount, String direction,Pageable paginatedPages, Pageable paginatedPagesForDiscountSort) {
+    private Page<Product> findProductsFilteredBySupplierAndAvailability(
+            long id, boolean isAvailable, boolean sortByDiscount, String direction,
+            Pageable paginatedPages, Pageable paginatedPagesForDiscountSort) {
         if(sortByDiscount) {
-            return paginateList(productRepository.findBySupplierIdAndAvailabilityEquals(id, isAvailable), paginatedPagesForDiscountSort, direction);
+            return paginateList(
+                    productRepository.findBySupplierIdAndAvailabilityEquals(id, isAvailable), paginatedPagesForDiscountSort, direction);
         } else {
             return productRepository.findBySupplierIdAndAvailabilityEquals(id, isAvailable, paginatedPages);
         }
@@ -153,7 +172,8 @@ public class ProductService {
         }
     }
 
-    private Page<Product> findByAvailability(int page, int pageSize, String direction,  String sortBy, boolean isAvailable, boolean sortByDiscount) {
+    private Page<Product> findByAvailability(
+            int page, int pageSize, String direction,  String sortBy, boolean isAvailable, boolean sortByDiscount) {
         if(!sortByDiscount) {
             Pageable paginatedPages = PageRequest.of(page, pageSize, Sort.Direction.fromString(direction), sortBy);
             return productRepository.findByAvailabilityEquals(isAvailable, paginatedPages);
