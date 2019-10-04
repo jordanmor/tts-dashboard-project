@@ -20,6 +20,7 @@ A REST API that can handle the following:
 - send product paginated data sorted by id, name, full price, sale price, discount, category or supplier
 - send product paginated data by category, supplier, availability, category & availability and supplier & availability
 - send product data filtered and sorted  
+- sends custom error messages for certain failed http requests
 
 A front end dashboard built with Angular that:
 - displays products, categories and suppliers data
@@ -33,6 +34,7 @@ A front end dashboard built with Angular that:
 - shows direction of sorted field
 - utilizes pagination
 - utilizes a page size filter
+- handles and displays to user select error messages from backend
 - has custom styling and a theme based on three of The Hartford's main website colors
 
 
@@ -62,7 +64,8 @@ for the Heroku connection and use the following properties to use the app with y
     spring.datasource.password={YOUR MYSQL PASSWORD}
     ```    
     **Note: Make sure MySQL is running on your local machine.**  
-5. Run the application, which will connect to the local MySQL db, create the database schema with all relevant tables and columns, populate the tables with initial data from csv files found in `src/main/resources/csv`, and run the REST API that will communicate with your front end.
+5. Change all of the controllers cross origins annotations to: `@CrossOrigin(origins = "http://localhost:4200")`
+6. Run the application, which will connect to the local MySQL db, create the database schema with all relevant tables and columns, populate the tables with initial data from csv files found in `src/main/resources/csv`, and run the REST API that will communicate with your front end.
 
  ---
 
