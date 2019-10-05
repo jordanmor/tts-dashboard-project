@@ -65,7 +65,8 @@ for the Heroku connection and use the following properties to use the app with y
     ```    
     **Note: Make sure MySQL is running on your local machine.**  
 5. Change all of the controllers cross origins annotations to: `@CrossOrigin(origins = "http://localhost:4200")`
-6. Run the application, which will connect to the local MySQL db, create the database schema with all relevant tables and columns, populate the tables with initial data from csv files found in `src/main/resources/csv`, and run the REST API that will communicate with your front end.
+6. Run the application, which will connect to the local MySQL db, create the database schema with all relevant tables and columns, and run the REST API that will communicate with your front end.
+7. Populate the database with the csv files found in `src/main/resources/csv` using the MySQL Workbench import tool.
 
  ---
 
